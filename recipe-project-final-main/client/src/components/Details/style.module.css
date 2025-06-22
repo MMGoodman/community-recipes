@@ -1,0 +1,27 @@
+.detailsContainer {
+    margin-top: 0.1 rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 12px 10px; 
+}
+
+.detailItem {
+    background-color: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: right;
+    min-height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.detailLabel {
+    font-weight: bold;
+    margin-left: 0.5 rem;
+}
+
+.detailText {
+    font-weight: normal;
+}

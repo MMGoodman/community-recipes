@@ -1,0 +1,27 @@
+  .header {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .container {
+    display: flex;
+    margin-top: 2rem;
+  }
+
+  .DataUser {
+    flex: 1;
+    padding: 1rem;
+    background-color: #f1f3f5;
+    border-radius: 8px;
+    margin-right: 2rem;
+  }
+
+  .content {
+    flex: 3;
+  }
+
+  h2 {
+    color: orangered;
+    text-align: center;
+  }

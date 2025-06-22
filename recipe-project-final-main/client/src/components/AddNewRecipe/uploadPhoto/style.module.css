@@ -1,0 +1,107 @@
+.uploadContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2rem;
+  }
+  
+  .uploadTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .uploadArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .uploadLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #f9fafb;
+  }
+  
+  .uploadLabel:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .uploadText {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .hiddenInput {
+    display: none;
+  }
+  
+  .spinnerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spinner {
+    animation: spin 1s linear infinite;
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid #f3f4f6;
+    border-bottom: 2px solid #1f2937;
+    border-radius: 50%;
+  }
+  
+  .uploadedContentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .uploadedImageContainer {
+    width: 100%;
+    height: 200px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .uploadAreaImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  
+    background-color: #f9fafb;
+  }
+  
+  .editButton {
+    padding: 8px 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+     }
+  
+  .editButton:hover {
+    background-color: #f3f4f6;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

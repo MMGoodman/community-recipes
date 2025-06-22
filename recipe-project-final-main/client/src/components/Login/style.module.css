@@ -1,0 +1,99 @@
+.container {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  padding: 20px;
+}
+
+.loginFrom {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.loginFrom input[type="text"],
+.loginFrom input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-size: 18px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.loginFrom input[type="text"]:focus,
+.loginFrom input[type="password"]:focus {
+  border-color: #ff9800;
+  box-shadow: 0 0 5px #ff9800;
+}
+
+.loginFrom input::placeholder {
+  color: #999;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.loginFrom input[type="submit"] {
+  background: linear-gradient(to right, #ff9800, #ff5722);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.loginFrom input[type="submit"]:hover {
+  background: linear-gradient(to right, #e65100, #ff7043);
+  transform: scale(1.03);
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: -8px;
+  font-weight: bold;
+}
+
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.eyeButton {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ff9800;
+}
+
+.link {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: rgba(255, 152, 0, 0.8);
+  padding: 10px 15px;
+  border-radius: 10px;
+}
