@@ -19,6 +19,7 @@ function Layout() {
               <span>  <div className={style.DataUser}>
                     <DataUser />
                 </div>
+              
                 <h2>תגים:</h2>
                 <ShowTags setCurentTag={setCurentTag}/>
                 </span>

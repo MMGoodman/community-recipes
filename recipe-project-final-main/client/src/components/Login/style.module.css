@@ -14,9 +14,19 @@
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  width: 100%;
+  width: 90vw;
   max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
   text-align: center;
+  box-sizing: border-box;
+
+  /* הסתרת פס גלילה בדפדפנים שונים */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.loginFrom::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .loginFrom input[type="text"],

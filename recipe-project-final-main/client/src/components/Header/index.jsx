@@ -5,15 +5,11 @@ import axios from 'axios';
 import DataContext from '../context/DataContext';
 
 function Header() {
-
   const { curentUser, setCurentUser } = useContext(DataContext);
-
   const navigate = useNavigate();
-
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
 
-  // קריאה לשרת עבור תוצאות חיפוש
   useEffect(() => {
     const bringData = async () => {
       try {
@@ -37,26 +33,30 @@ function Header() {
   };
 
   const handelOffButton = () => {
-    setCurentUser({});
+    setCurentUser(null); // במקום {} – כי context נטען לפי null או אובייקט אמיתי
   };
+
+  const isLoggedIn = curentUser && curentUser._id;
 
   return (
     <div className={style.header}>
       <div className={style.authSection}>
-        {curentUser._id && (
+        {isLoggedIn ? (
           <button onClick={handelOffButton} className={style.authButton}>להתנתק</button>
-        )}
-
-        {!curentUser._id && (
+        ) : (
           <>
-            <Link to={'/SignIn'} className={style.authLink}>הרשמה</Link>
-            <Link to={'/Login'} className={style.authLink}>התחברות</Link>
+            <Link to='/SignIn' className={style.authLink}>הרשמה</Link>
+            <Link to='/Login' className={style.authLink}>התחברות</Link>
           </>
         )}
       </div>
-      <div>{curentUser._id &&
-        (<div>{curentUser.lName} {curentUser.fName} </div>)}
-      </div>
+
+      {isLoggedIn && (
+        <div>
+          {curentUser.lName} {curentUser.fName}
+        </div>
+      )}
+
       <div className={style.searchSection}>
         <input
           type="search"
@@ -78,9 +78,8 @@ function Header() {
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 }
 
 export default Header;
-

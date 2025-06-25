@@ -1,30 +1,153 @@
-.signFrom input  {
-    width: 100%;
-    height: 50px;
-    margin: 10px;
-    font-size: 20px;
-    text-align: center;
-    color: orangered; 
-    
-}
-.signFrom input::placeholder {
-    color: #ff0000; 
-  }
 
-  .error {
-    color: red;
-    font-size: 12px;
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  padding: 4vh 4vw;
+  box-sizing: border-box;
+}
+.signForm {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  width: 90vw;
+  max-width: 480px;
+  max-height:100vh;
+  overflow-y: auto;
+  padding: 6vh 4vw;
+  box-sizing: border-box;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE ו־Edge */
+}
+
+
+.signForm::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+.signForm input{
+    height: 10%;
+}
+.signForm input[type="text"],
+.signForm input[type="password"],
+.signForm input[type="email"] {
+  width: 100%;
+  padding: 1em;
+  margin: 1em 0;
+  border: 2px solid #eee;
+  border-radius: 0.8em;
+  font-size: 1em;
+  outline: none;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.signForm input:focus {
+  border-color: #ff9800;
+  box-shadow: 0 0 5px #ff9800;
+}
+
+.signForm input::placeholder {
+  color: #999;
+}
+
+.signForm input[type="submit"] {
+  background: linear-gradient(to right, #ff9800, #ff5722);
+  color: white;
+  padding: 1px;
+  border: none;
+  border-radius: 0.8em;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+  font-weight: bold;
+}
+
+.signForm input[type="submit"]:hover {
+  background: linear-gradient(to right, #e65100, #ff7043);
+  transform: scale(1.02);
 }
 
 .passwordContainer {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .eyeButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #ff9800;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: -0.5em;
+  font-weight: bold;
+}
+
+.link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: rgba(255, 152, 0, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ff7043;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* מסכים קטנים */
+@media (max-width: 600px) {
+  .signForm {
+    padding: 5vh 6vw;
+  }
+
+  .logo {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .link {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
