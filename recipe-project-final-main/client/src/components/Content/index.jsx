@@ -43,9 +43,7 @@ function Content({ curentTag, setCurentTag}) {
         }
     }
 
-    //יש שני כניסות לדף פעם אחת בLINK TO 
-    //ופעם אחת ב NAVIGATE 
-    // ולכן רק בצורה הזו הדף מרונדר מחדש תמיד
+
     useEffect(() => {
         importData();
     }, []);

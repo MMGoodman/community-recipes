@@ -1,10 +1,10 @@
-import { useEffect, useState, useContext } from 'react';
-import style from './style.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import DataContext from '../context/DataContext';
+import { useEffect, useState, useContext } from "react";
+import style from "./style.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import DataContext from "../context/DataContext";
 
-function Header() {
+function Header({ toggleSidebar, isSidebarOpen }) {
   const { curentUser, setCurentUser } = useContext(DataContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -13,7 +13,12 @@ function Header() {
   useEffect(() => {
     const bringData = async () => {
       try {
-        const result = await axios.post('http://localhost:8000/api/recipe/search', { filter: search });
+        const result = await axios.post(
+          "http://localhost:8000/api/recipe/search",
+          {
+            filter: search,
+          }
+        );
         setData(result.data);
       } catch (error) {
         console.log(error);
@@ -28,25 +33,35 @@ function Header() {
   }, [search]);
 
   const handelSearch = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setSearch(e.target.value);
   };
 
   const handelOffButton = () => {
-    setCurentUser(null); // במקום {} – כי context נטען לפי null או אובייקט אמיתי
+    setCurentUser(null);
   };
 
   const isLoggedIn = curentUser && curentUser._id;
 
   return (
     <div className={style.header}>
+      <button className={style.toggleButton} onClick={toggleSidebar}>
+        {isSidebarOpen ? "✖ סגור" : "☰ תפריט"}
+      </button>
+
       <div className={style.authSection}>
         {isLoggedIn ? (
-          <button onClick={handelOffButton} className={style.authButton}>להתנתק</button>
+          <button onClick={handelOffButton} className={style.authButton}>
+            להתנתק
+          </button>
         ) : (
           <>
-            <Link to='/SignIn' className={style.authLink}>הרשמה</Link>
-            <Link to='/Login' className={style.authLink}>התחברות</Link>
+            <Link to="/SignIn" className={style.authLink}>
+              הרשמה
+            </Link>
+            <Link to="/Login" className={style.authLink}>
+              התחברות
+            </Link>
           </>
         )}
       </div>
@@ -56,6 +71,7 @@ function Header() {
           {curentUser.lName} {curentUser.fName}
         </div>
       )}
+
 
       <div className={style.searchSection}>
         <input

@@ -12,7 +12,7 @@ function RecipeList({ item }) {
         <div className={style.content}>
                 <div onClick={() => { navigate(`/recipe/${item._id}`) }}>
                     <h3> {item.name} </h3>
-                    <h4>  👁‍🗨 {item.views}   </h4>
+                    <h4>👁‍🗨 {item.views}</h4>
                     <img className={style.recipeImage} src={item.image} />
                     <div >
                         <Details details={item} />
