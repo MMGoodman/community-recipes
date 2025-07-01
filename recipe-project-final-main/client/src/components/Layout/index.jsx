@@ -11,14 +11,14 @@ function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <>
+    <div className={style.main}>
       <div className={style.stickyHeader}>
         <Header
           toggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
           isSidebarOpen={isSidebarOpen}
         />
       </div>
-
+       <div className={style.bar}>מתכון קהילתי</div>
       <div className={style.container}>
         <div className={`${style.sidebar} ${isSidebarOpen ? style.open : ''}`}>
           <h3 className={style.sidebarTitle}>אפשרויות המשתמש</h3>
@@ -36,7 +36,7 @@ function Layout() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
