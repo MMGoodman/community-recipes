@@ -16,3 +16,28 @@
   max-width: 50%;
   box-sizing: border-box;
 }
+.refreshButton {
+  background: linear-gradient(to left, #42a5f5, #478ed1);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.refreshButton:hover {
+  background: linear-gradient(to left, #2196f3, #1976d2);
+  transform: scale(1.03);
+}
+
+.refreshButton:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
