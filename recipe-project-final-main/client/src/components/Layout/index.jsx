@@ -18,7 +18,7 @@ function Layout() {
           isSidebarOpen={isSidebarOpen}
         />
       </div>
-       <div className={style.bar}>מתכון קהילתי</div>
+       <div className={style.bar}>המתכון קהילתי</div>
       <div className={style.container}>
         <div className={`${style.sidebar} ${isSidebarOpen ? style.open : ''}`}>
           <h3 className={style.sidebarTitle}>אפשרויות המשתמש</h3>
