@@ -1,9 +1,9 @@
-import React, { useEffect, useContext, useState } from 'react';
-import axios from 'axios';
-import DataContext from '../context/DataContext';
-import { Link } from 'react-router-dom';
-import style from './style.module.css';
-import RecipeList from '../RecipeList';
+import { useEffect, useContext, useState } from "react";
+import axios from "axios";
+import DataContext from "../context/DataContext";
+import { Link } from "react-router-dom";
+import style from "./style.module.css";
+import RecipeList from "../RecipeList";
 
 function UserFavoriteRecipe() {
   const [favoriteRecipe, setFavoriteRecipe] = useState([]);
@@ -14,13 +14,18 @@ function UserFavoriteRecipe() {
 
     const getUserRecipe = async () => {
       try {
-        const result = await axios.get(`http://localhost:8000/api/user/all/favorite/${curentUser.email}`);
-        const recipeNames = result.data.map(item => item.recipe);
+        const result = await axios.get(
+          `http://localhost:8000/api/user/all/favorite/${curentUser.email}`
+        );
+        const recipeNames = result.data.map((item) => item.recipe);
 
         const recipes = [];
         for (let name of recipeNames) {
           try {
-            const recipeResult = await axios.post('http://localhost:8000/api/recipe/by/name', { name });
+            const recipeResult = await axios.post(
+              "http://localhost:8000/api/recipe/by/name",
+              { name }
+            );
             recipes.push(recipeResult.data);
           } catch (error) {
             console.log(`Error fetching recipe for ${name}:`, error);
@@ -39,11 +44,11 @@ function UserFavoriteRecipe() {
   const handelLess = async (recipe) => {
     const body = {
       userId: curentUser._id,
-      recipeName: recipe.name
+      recipeName: recipe.name,
     };
     try {
-      await axios.post('http://localhost:8000/api/user/delete/favorite', body);
-      setFavoriteRecipe(prev => prev.filter(r => r.name !== recipe.name));
+      await axios.post("http://localhost:8000/api/user/delete/favorite", body);
+      setFavoriteRecipe((prev) => prev.filter((r) => r.name !== recipe.name));
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +58,9 @@ function UserFavoriteRecipe() {
 
   return (
     <>
-      <Link to='/' className={style.backLink}>חזרה</Link>
+      <Link to="/" className={style.backLink}>
+        חזרה
+      </Link>
       <h3>המתכונים שאהבתי</h3>
       <div className={style.content}>
         <div className={style.item}>

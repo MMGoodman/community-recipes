@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RecipeList from '../RecipeList';
@@ -26,8 +26,11 @@ console.log(recipes);
   
   return (
     <div className={style.content}>
-      <Link to={'/'}>חזרה</Link>
-      <h1>מתכונים לאישור:</h1>
+<Link to="/" className={style.backLink}>
+  חזרה
+</Link>
+
+      <h1>מתכונים לאישור</h1>
       <div className={style.item}>
         {recipes.map((item) => (
           <div key={item._id} 

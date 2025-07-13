@@ -9,6 +9,7 @@ function Header({ toggleSidebar, isSidebarOpen }) {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const bringData = async () => {
@@ -39,6 +40,7 @@ function Header({ toggleSidebar, isSidebarOpen }) {
 
   const handelOffButton = () => {
     setCurentUser(null);
+    setIsMenuOpen(false);
   };
 
   const isLoggedIn = curentUser && curentUser._id;
@@ -51,9 +53,21 @@ function Header({ toggleSidebar, isSidebarOpen }) {
 
       <div className={style.authSection}>
         {isLoggedIn ? (
-          <button onClick={handelOffButton} className={style.authButton}>
-            להתנתק
-          </button>
+          <div className={style.userMenu}>
+            <div
+              className={style.userName}
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              title="לחץ כדי לפתוח תפריט"
+            >
+              שלום {curentUser.lName} {curentUser.fName} ⌄
+            </div>
+
+            {isMenuOpen && (
+              <button onClick={handelOffButton} className={style.authButton}>
+                להתנתק
+              </button>
+            )}
+          </div>
         ) : (
           <>
             <Link to="/SignIn" className={style.authLink}>
@@ -65,13 +79,6 @@ function Header({ toggleSidebar, isSidebarOpen }) {
           </>
         )}
       </div>
-
-      {isLoggedIn && (
-        <div>
-          {curentUser.lName} {curentUser.fName}
-        </div>
-      )}
-
 
       <div className={style.searchSection}>
         <input

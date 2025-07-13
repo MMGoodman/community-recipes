@@ -33,7 +33,11 @@ function UserRecipes() {
 
   return (
     <div>
-      <Link to="/">חזרה</Link>
+      
+   <Link to="/" className={style.backLink}>
+  חזרה
+</Link>
+
       <h3>המתכונים שלי</h3>
       <div className={style.item}>
         {recipes.map((item) => (

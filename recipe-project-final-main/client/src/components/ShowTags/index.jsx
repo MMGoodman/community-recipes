@@ -10,8 +10,7 @@ function ShowTags({ setCurentTag }) {
         e.preventDefault();
         setCurentTag(e.target.value);
 
-        //הקריאה לשרת עם המידע פה מבוצעת בקומפונננטה  
-        //Content
+    
     }
     
     useEffect(() => {
