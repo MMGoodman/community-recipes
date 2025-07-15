@@ -51,7 +51,8 @@ function Login() {
 
       {/* לוגו וכותרת */}
       <div className={style.header}>
-        <h1 className={style.logo}>🍲 מתכון קהילתי</h1>
+        <h1 className={style.logo}>🍲 המתכון קהילתי</h1>
+        <h3 className={style.logo}>דף התחברות</h3>
         <p className={style.subtitle}>המקום שבו כל אחד משתף את הסיר שלו</p>
       </div>
 
