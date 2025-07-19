@@ -28,9 +28,11 @@ function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e){
     e.preventDefault();
     if (!validateForm()) return;
+
+console.log("👉 נשלח לשרת:", { fName, lName, password });
 
     try {
       const user = await axios.post(`http://localhost:8000/api/user/find`, {
@@ -39,9 +41,11 @@ function Login() {
         password,
       });
       setCurentUser(user.data);
+      console.log("🔼 שליחה לשרת:", { lName, fName, password });
+
       user.data._id ? navigate("/") : setFlag(false);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message+"?");
     }
   }
 

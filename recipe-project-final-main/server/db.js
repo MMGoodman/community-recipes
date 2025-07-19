@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 const { config } = require('dotenv');
 
-config();
+config(); // טוען את משתני הסביבה מקובץ .env
 
 function connect() {
-    try {
-        console.log("MONGO_URL =", process.env.MONGO_URL); // ✅ בדיקה לפני
-
-        mongoose.connect(process.env.MONGO_URL)
-            .then(res => console.log("connecting"));
-    } catch (err) {
-        console.log(err);
-    }
+  mongoose
+    .connect(process.env.MONGO_URL)
+    .then(() => {
+      console.log("✅ Connected to MongoDB");
+      console.log("📦 Database:", mongoose.connection.name);
+    })
+    .catch((err) => {
+      console.error("❌ MongoDB connection error:", err);
+    });
 }
 
 module.exports = { connect };

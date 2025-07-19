@@ -17,22 +17,29 @@ userRouter.post('/', async (req, res) => {
     }
 })
 
-
 userRouter.post('/find', async (req, res) => {
-    const lName = req.body.lName;
-    const fName = req.body.fName;
-    const password = req.body.password;
-    const filter = { lName, fName, password }
-    console.log(filter);
-    try {
-        let result = await userService.readUser(filter);
-        res.send(result);
+    console.log("📩 req.body:", req.body); // חשוב מאוד
+
+    const { lName, fName, password } = req.body;
+
+    if (!fName || !lName || !password) {
+        console.log("❌ אחד או יותר מהשדות ריקים");
+        return res.status(400).send("שדות חסרים");
     }
-    catch (error) {
-        console.log(error);
+
+    try {
+        let result = await userService.readUser({ fName, lName, password });
+        console.log("🟢 תוצאה מהקריאה למסד:", result);
+
+        if (!result) return res.status(400).send("משתמש לא נמצא");
+        res.send(result);
+    } catch (error) {
+        console.log("🔴 שגיאה:", error);
         res.status(400).send(error.message);
     }
-})
+});
+
+
 
 
 
@@ -43,7 +50,7 @@ userRouter.post('/add/favoriteRecipe', async (req, res) => {
         let result = await userService.addRecipe({ email }, { recipe });
         console.log(result, 111);
         res.send(result);
-    }
+    }   
     catch (error) {
         console.log(error);
         res.status(400).send(error.message);

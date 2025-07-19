@@ -27,43 +27,27 @@ async function handelValidation(reqBody) {
 }
 
 
+const userModel = require('./user.module');
 
 async function readUser(filter = {}) {
-    // const filter={lName,fName};
-    console.log(filter);
-    let user = await userController.readOne(filter);
-    return user;
+  const cleanFilter = {
+    fName: filter.fName?.trim(),
+    lName: filter.lName?.trim(),
+    password: filter.password?.trim(),
+  };
+
+  console.log("🔍 קריאת משתמש עם פילטר:", cleanFilter);
+
+  const user = await userModel.findOne({
+    fName: new RegExp(`^${cleanFilter.fName}$`, 'i'),
+    lName: new RegExp(`^${cleanFilter.lName}$`, 'i'),
+    password: cleanFilter.password,
+  });
+
+  return user;
 }
-
-
-async function deleteUser(id) {
-    let user = await userController.readOne({ _id: id });
-    if (user) userController.del(id);
-    return;
-}
-
-
-
-async function addRecipe(email, data) {
-    const dataUpdate = { $addToSet: { "favorite": data } }
-    let result = await userController.upDate(email, dataUpdate);
-    return result;
-}
-
-
-async function deleteFavorite(filter) {
- console.log(filter , "from service");
-    let result = await userController.delFavorite(filter);
-    return result;
-}
-
-
-
-
 module.exports = {
-    addNewUser,
-    readUser,
-    addRecipe,
-    deleteUser,
-    deleteFavorite
-}
+  addNewUser,
+  handelValidation,
+  readUser
+};
