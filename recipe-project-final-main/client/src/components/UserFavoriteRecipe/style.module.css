@@ -46,16 +46,22 @@
   }
   
   .lessButton {
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    background: #fff0f0;
+    color: #e53935;
+    border: 1.5px solid #ffcdd2;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
     cursor: pointer;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    width: 100%;
   }
-  
+
   .lessButton:hover {
-    background-color: #c82333;
+    background-color: #e53935;
+    color: white;
+    border-color: #e53935;
   }
   
   @media (min-width: 1024px) {

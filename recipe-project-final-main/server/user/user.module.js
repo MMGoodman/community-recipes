@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     favorite: {
         type: [],
+        default: [],
     },
     admin: {
         type: Boolean,

@@ -16,6 +16,7 @@ function Recipe() {
     const [modalVisible, setModalVisible] = useState(false);
     const [tagRecipes, setTagRecipes] = useState([]);
     const [isFavorite, setIsFavorite] = useState(false);
+    const [favMsg, setFavMsg] = useState('');
     const { curentUser, setCurentUser } = useContext(DataContext);
 
 
@@ -73,28 +74,29 @@ function Recipe() {
         }
         try {
             if (isFavorite) {
-                // הסרה ממועדפים
                 await axios.post(`${import.meta.env.VITE_API_URL}/api/user/delete/favorite`, {
                     userId: curentUser._id,
                     recipeName: recipe.name,
                 });
                 setIsFavorite(false);
-                // עדכון הקונטקסט
                 const updatedFavorite = (curentUser.favorite || []).filter(f => f.recipe !== recipe.name);
                 setCurentUser({ ...curentUser, favorite: updatedFavorite });
+                setFavMsg('הוסר ממועדפים');
             } else {
-                // הוספה למועדפים
                 await axios.post(`${import.meta.env.VITE_API_URL}/api/user/add/favoriteRecipe`, {
                     email: curentUser.email,
                     recipe: recipe.name,
                 });
                 setIsFavorite(true);
-                // עדכון הקונטקסט
                 const updatedFavorite = [...(curentUser.favorite || []), { recipe: recipe.name }];
                 setCurentUser({ ...curentUser, favorite: updatedFavorite });
+                setFavMsg('✅ נוסף למועדפים!');
             }
+            setTimeout(() => setFavMsg(''), 2500);
         } catch (error) {
-            console.log(error.message);
+            const msg = error.response?.data || error.message || 'שגיאה';
+            setFavMsg(`❌ ${msg}`);
+            setTimeout(() => setFavMsg(''), 3000);
         }
     }
 
@@ -124,6 +126,7 @@ function Recipe() {
 
     return (
         <div className={style.recipeContainer}>
+            {favMsg && <div className={style.favToast}>{favMsg}</div>}
             <div className={style.navigationBar}>
                 <Link to={'/'} className={style.backLink}> חזרה </Link>
                 <div className={style.actionButtons}>
