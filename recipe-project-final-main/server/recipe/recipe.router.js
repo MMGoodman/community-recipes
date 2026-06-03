@@ -3,6 +3,24 @@ const exprees = require('express');
 recipeRouter = exprees.Router();
 
 
+recipeRouter.get('/all/tags', (req, res) => {
+    recipeService.getAllTags()
+        .then(response => {
+            let allTags = [];
+            if (response) {
+                allTags = response.map(recipe => recipe.tags).flat();
+                let uniqueTags = [...new Set(allTags)];
+                const sortedTags = uniqueTags.sort((a, b) => a.localeCompare(b));
+                res.send(sortedTags);
+            } else {
+                res.send([]);
+            }
+        })
+        .catch(error => {
+            res.status(400).send(error.message);
+        });
+});
+
 recipeRouter.get('/:recipeId', async (req, res) => {
     console.log(req.params.recipeId,11111);
     try {
@@ -108,28 +126,6 @@ recipeRouter.put('/views/update', async (req, res) => {
 
 
 
-recipeRouter.get('/all/tags', (req, res) => {
-    recipeService.getAllTags()
-        .then(response => {
-            // שלב 1: איחוד כל התגים מכל האובייקטים למערך אחד
-            let allTags = [];
-
-            if (response) {
-                allTags = response.map(recipe => recipe.tags).flat();
-
-                // שלב 2: הסרת כפילויות
-                let uniqueTags = [...new Set(allTags)];
-
-                // שלב 3: מיון המערך בסדר אלפביתי
-                const sortedTags = uniqueTags.sort((a, b) => a.localeCompare(b));
-
-                res.send(sortedTags);
-            }
-        })
-        .catch(error => {
-            res.status(400).send(error.message);
-        });
-});
 
 
 recipeRouter.patch('/admin/update/:id', async (req, res) => {

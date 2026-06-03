@@ -17,7 +17,7 @@ function Content({ curentTag, setCurentTag }) {
             filter: curentTag,
           })
           .then((res) => {
-            setRecipes(res.data);
+            setRecipes(Array.isArray(res.data) ? res.data : []);
           });
       } catch (error) {
         console.log(error);
@@ -32,7 +32,7 @@ function Content({ curentTag, setCurentTag }) {
       let response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/recipe/status/${true}`
       );
-      setRecipes(response.data);
+      setRecipes(Array.isArray(response.data) ? response.data : []);
       setCurentTag("");
     } catch (error) {
       console.log(error.message);

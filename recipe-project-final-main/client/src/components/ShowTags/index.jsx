@@ -18,7 +18,7 @@ function ShowTags({ setCurentTag }) {
             try {
              //קריאה שמביאה את המידע כבר מסונן וממוין מהצד שרת 
                 let response = await axios.get(`${import.meta.env.VITE_API_URL}/api/recipe/all/tags`)
-           setAllTags(response.data);
+           setAllTags(Array.isArray(response.data) ? response.data : []);
             }
             catch (error) {
                 console.log(error.massage);
