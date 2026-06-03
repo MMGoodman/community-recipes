@@ -1,10 +1,12 @@
 .recipeContainer {
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .navigationBar {
@@ -163,17 +165,41 @@ h1 {
 }
 
 .tagsModalContent {
-    margin-top: 10%; 
+    margin-top: 10%;
     background-color: #fff;
     padding: 2rem;
     border-radius: 10px;
-    width: 60%;
-    max-width: 1500px;
+    width: 90%;
+    max-width: 900px;
     max-height: 80%;
-    overflow-y: auto; 
-    overflow-x: hidden; 
+    overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
+}
+
+@media (max-width: 600px) {
+    .recipeContainer {
+        padding: 1rem;
+    }
+    .navigationBar {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    .actionButtons {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .tagsModalContent {
+        width: 95%;
+        padding: 1rem;
+        margin-top: 5%;
+    }
+    .modalRecipeImage {
+        width: 120px;
+        height: 120px;
+    }
 }
 
 .closeButton {

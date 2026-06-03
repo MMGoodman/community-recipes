@@ -26,10 +26,12 @@ function SignIn() {
   });
 
   const [goodSign, setGoodSign] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   async function conect(data) {
+    setErrorMsg("");
     try {
       const user = await axios.post(`${import.meta.env.VITE_API_URL}/api/user`, data);
       setGoodSign("נרשמת בהצלחה 🎉");
@@ -37,7 +39,8 @@ function SignIn() {
       reset();
       navigate('/');
     } catch (error) {
-      console.log(error.message);
+      const msg = error.response?.data || error.message;
+      setErrorMsg(typeof msg === "string" ? msg : "שגיאה בהרשמה, נסה שנית");
     }
   }
 
@@ -108,7 +111,8 @@ function SignIn() {
         <input type="submit" value="הרשמה" />
       </form>
 
-      {goodSign && <p>{goodSign}</p>}
+      {goodSign && <p style={{color: "green", fontWeight: "bold"}}>{goodSign}</p>}
+      {errorMsg && <p className={style.error}>{errorMsg}</p>}
     </div>
 
   );

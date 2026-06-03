@@ -6,9 +6,14 @@ async function addNewUser(data) {
     if (!data?.email) throw { code: 400, message: "email input error" }
 
     let user = await userController.readOne({ email: data.email });
-    if (user) throw { code: user.isActive ? 400 : 450, message: "user is exist" };
+    if (user) throw { code: user.isActive ? 400 : 450, message: "המשתמש כבר קיים במערכת" };
 
     let newUserMapped = await handelValidation(data);
+
+    const adminCount = await userModel.countDocuments({ admin: true });
+    if (adminCount === 0) {
+        newUserMapped.admin = true;
+    }
 
     console.log(newUserMapped, " from service");
     let result = await userController.create(newUserMapped)

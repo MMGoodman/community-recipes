@@ -104,7 +104,7 @@ function Recipe() {
                     <button className={style.likeButton} onClick={handleLikes}>
                         הוספה למועדפים
                     </button>
-                    {curentUser.admin && <button
+                    {curentUser?.admin && <button
                         className={style.adminButton}
                         onClick={adminEdit}>
                         <span>✏️</span> לעריכה

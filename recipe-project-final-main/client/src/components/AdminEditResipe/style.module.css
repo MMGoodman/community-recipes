@@ -16,13 +16,30 @@ body {
   }
   
   form {
-    width: 80%;
+    width: 90%;
     background-color: #ffffff;
-    padding: 50px;
+    padding: 30px;
     margin: 20px auto;
     max-width: 1000px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 600px) {
+    form {
+      width: 100%;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 0;
+    }
+    .recipeModalContent {
+      width: 95%;
+    }
+    .deleteModalContent {
+      width: 90%;
+      margin: 0 1rem;
+    }
   }
   
   .errorText{

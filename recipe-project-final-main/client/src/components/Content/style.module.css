@@ -7,14 +7,21 @@
 .item {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1.5rem;
   justify-content: center;
 }
 
 .item > * {
-  flex: 1 1 min(100%, 300px); /* יתאים לגודל המסך */
-  max-width: 50%;
+  flex: 1 1 280px;
+  max-width: 360px;
   box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .item > * {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
 }
 .refreshButton {
   background: linear-gradient(to left, #42a5f5, #478ed1);
