@@ -299,23 +299,27 @@ body {
     padding: 0.3rem 0.5rem;
   }
 
+  /* שורה ראשונה: auth + toggle */
+  .authSection {
+    order: 1;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .toggleButton {
+    order: 2;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  /* שורה שנייה: חיפוש בכל הרוחב */
   .searchSection {
     order: 3;
     max-width: 100%;
     width: 100%;
     margin: 0;
     flex: 1 1 100%;
-  }
-
-  .authSection {
-    order: 1;
-    gap: 0.4rem;
-  }
-
-  .toggleButton {
-    order: 0;
-    padding: 0.4rem 0.7rem;
-    font-size: 0.9rem;
   }
 
   .authLink {

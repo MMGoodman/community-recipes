@@ -47,10 +47,6 @@ function Header({ toggleSidebar, isSidebarOpen }) {
 
   return (
     <div className={style.header}>
-      <button className={style.toggleButton} onClick={toggleSidebar}>
-        {isSidebarOpen ? "✖ סגור" : "☰ תפריט"}
-      </button>
-
       <div className={style.authSection}>
         {isLoggedIn ? (
           <div className={style.userMenu}>
@@ -119,6 +115,10 @@ function Header({ toggleSidebar, isSidebarOpen }) {
           </div>
         )}
       </div>
+
+      <button className={style.toggleButton} onClick={toggleSidebar}>
+        {isSidebarOpen ? "✖ סגור" : "☰ תפריט"}
+      </button>
     </div>
   );
 }
