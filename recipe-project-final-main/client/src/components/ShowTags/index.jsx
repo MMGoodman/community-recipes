@@ -1,48 +1,39 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import axios from 'axios';
 
-function ShowTags({ setCurentTag }) {
+function ShowTags({ setCurentTag, curentTag }) {
+  const [allTags, setAllTags] = useState([]);
 
- const [allTags, setAllTags] = useState([]);
+  const handelTagButton = (tag) => {
+    setCurentTag(tag === curentTag ? '' : tag);
+  };
 
-    const handelTagButton = (e) => {
-        e.preventDefault();
-        setCurentTag(e.target.value);
+  useEffect(() => {
+    const importTags = async () => {
+      try {
+        let response = await axios.get(`${import.meta.env.VITE_API_URL}/api/recipe/all/tags`);
+        setAllTags(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    importTags();
+  }, []);
 
-    
-    }
-    
-    useEffect(() => {
-        const importTags = async () => {
-            try {
-             //קריאה שמביאה את המידע כבר מסונן וממוין מהצד שרת 
-                let response = await axios.get(`${import.meta.env.VITE_API_URL}/api/recipe/all/tags`)
-           setAllTags(Array.isArray(response.data) ? response.data : []);
-            }
-            catch (error) {
-                console.log(error.massage);
-            }
-        }
-        importTags();
-    }, [])
-
-
-    return (
-        <div className={styles['tags-container']}>
-            {allTags && allTags.map((tag, index) => (
-                <button
-                    value={tag}
-                    onClick={(e) => handelTagButton(e)}
-                    key={index}
-                    className={styles.tag}
-                >
-                    {tag}
-                </button>
-            ))}
-        </div>
-
-    )
+  return (
+    <div className={styles['tags-container']}>
+      {allTags.map((tag, index) => (
+        <button
+          key={index}
+          onClick={() => handelTagButton(tag)}
+          className={`${styles.tag} ${curentTag === tag ? styles.active : ''}`}
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+  );
 }
-export default ShowTags;
 
+export default ShowTags;

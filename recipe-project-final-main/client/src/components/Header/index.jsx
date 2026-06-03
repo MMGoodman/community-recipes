@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DataContext from "../context/DataContext";
 
-function Header({ toggleSidebar, isSidebarOpen }) {
+function Header() {
   const { curentUser, setCurentUser } = useContext(DataContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -16,21 +16,15 @@ function Header({ toggleSidebar, isSidebarOpen }) {
       try {
         const result = await axios.post(
           `${import.meta.env.VITE_API_URL}/api/recipe/search`,
-          {
-            filter: search,
-          }
+          { filter: search }
         );
         setData(result.data);
       } catch (error) {
         console.log(error);
       }
     };
-
-    if (search) {
-      bringData();
-    } else {
-      setData([]);
-    }
+    if (search) bringData();
+    else setData([]);
   }, [search]);
 
   const handelSearch = (e) => {
@@ -43,10 +37,16 @@ function Header({ toggleSidebar, isSidebarOpen }) {
     setIsMenuOpen(false);
   };
 
+  const goTo = (path) => {
+    navigate(path);
+    setIsMenuOpen(false);
+  };
+
   const isLoggedIn = curentUser && curentUser._id;
 
   return (
     <div className={style.header}>
+      {/* ימין: פרטי משתמש */}
       <div className={style.authSection}>
         {isLoggedIn ? (
           <div className={style.userMenu}>
@@ -60,23 +60,28 @@ function Header({ toggleSidebar, isSidebarOpen }) {
 
             {isMenuOpen && (
               <div className={style.dropdownMenu}>
+                <button className={style.dropdownItem} onClick={() => goTo('/newRecipe')}>
+                  ➕ הוספת מתכון חדש
+                </button>
+                <button className={style.dropdownItem} onClick={() => goTo('/favoriteRecipe')}>
+                  ❤️ מתכונים שאהבתי
+                </button>
+                <button className={style.dropdownItem} onClick={() => goTo('/userRecipes')}>
+                  📖 המתכונים שלי
+                </button>
                 {curentUser?.admin && (
-                  <button
-                    className={style.dropdownItem}
-                    onClick={() => { navigate('/admin'); setIsMenuOpen(false); }}
-                  >
-                    🛠️ לוח ניהול
-                  </button>
+                  <>
+                    <div className={style.dropdownDivider} />
+                    <button className={style.dropdownItem} onClick={() => goTo('/admin')}>
+                      🛠️ לוח ניהול
+                    </button>
+                    <button className={style.dropdownItem} onClick={() => goTo('/deleteRecipe')}>
+                      📋 מתכונים לאישור
+                    </button>
+                  </>
                 )}
-                {curentUser?.admin && (
-                  <button
-                    className={style.dropdownItem}
-                    onClick={() => { navigate('/deleteRecipe'); setIsMenuOpen(false); }}
-                  >
-                    📋 מתכונים לאישור
-                  </button>
-                )}
-                <button onClick={handelOffButton} className={style.dropdownItem}>
+                <div className={style.dropdownDivider} />
+                <button onClick={handelOffButton} className={`${style.dropdownItem} ${style.dropdownLogout}`}>
                   🚪 התנתקות
                 </button>
               </div>
@@ -84,20 +89,17 @@ function Header({ toggleSidebar, isSidebarOpen }) {
           </div>
         ) : (
           <>
-            <Link to="/SignIn" className={style.authLink}>
-              הרשמה
-            </Link>
-            <Link to="/Login" className={style.authLink}>
-              התחברות
-            </Link>
+            <Link to="/SignIn" className={style.authLink}>הרשמה</Link>
+            <Link to="/Login" className={style.authLink}>התחברות</Link>
           </>
         )}
       </div>
 
+      {/* אמצע: חיפוש */}
       <div className={style.searchSection}>
         <input
           type="search"
-          placeholder="הקלד שם של מתכון"
+          placeholder="🔍 חפש מתכון..."
           onChange={handelSearch}
           className={style.searchInput}
         />
@@ -107,7 +109,7 @@ function Header({ toggleSidebar, isSidebarOpen }) {
               <p
                 key={index}
                 className={style.searchResultItem}
-                onClick={() => navigate(`/recipe/${item.name}`)}
+                onClick={() => { navigate(`/recipe/${item.name}`); setData([]); setSearch(""); }}
               >
                 {item.name}
               </p>
@@ -116,9 +118,8 @@ function Header({ toggleSidebar, isSidebarOpen }) {
         )}
       </div>
 
-      <button className={style.toggleButton} onClick={toggleSidebar}>
-        {isSidebarOpen ? "✖ סגור" : "☰ תפריט"}
-      </button>
+      {/* שמאל: לוגו/שם */}
+      <div className={style.siteName}>המתכון הקהילתי</div>
     </div>
   );
 }

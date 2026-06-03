@@ -1,6 +1,3 @@
-/* ============================= */
-/* בסיס כללי וכללים כלליים      */
-/* ============================= */
 :root {
   --main-color: #ff7043;
   --text-color: #333;
@@ -18,186 +15,178 @@ body {
   color: var(--text-color);
 }
 
-/* ============================= */
-/* HEADER ראשי ותפריט           */
-/* ============================= */
-
-.stickyHeader {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background: var(--bg-light);
-  box-shadow: var(--shadow-light);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1.5rem;
-}
-
+/* ===== HEADER ===== */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  gap: 1rem;
+  padding: 0 0.5rem;
 }
 
-/* ============================= */
-/* כפתור תפריט                  */
-/* ============================= */
-
-.toggleButton {
-  background-color: var(--main-color);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color var(--transition);
-}
-
-.toggleButton:hover {
-  background-color: #ff5722;
-}
-
-/* ============================= */
-/* הודעת "שלום משתמש"           */
-/* ============================= */
-
-.welcomeMessage {
-  background: linear-gradient(to right, #ffd194, #ff8853);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  font-size: 1.2rem;
+/* ===== שם האתר (שמאל) ===== */
+.siteName {
+  font-size: 1.15rem;
   font-weight: bold;
-  color: var(--text-color);
-  box-shadow: var(--shadow-heavy);
-  margin: 1rem 0;
-  display: inline-block;
-  animation: fadeIn 1s ease;
+  color: var(--main-color);
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ============================= */
-/* אזור התחברות / התחברות      */
-/* ============================= */
-
+/* ===== AUTH (ימין) ===== */
 .authSection {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .userMenu {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }
 
 .userName {
   cursor: pointer;
   font-weight: bold;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.1rem;
   background: linear-gradient(to left, #ffd194, #ff8853);
   color: #333;
   border-radius: 999px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(255, 112, 67, 0.3);
+  transition: box-shadow var(--transition);
+  white-space: nowrap;
+  font-size: 0.95rem;
 }
 
 .userName:hover {
-  background-color: #ffcc80;
+  box-shadow: 0 4px 10px rgba(255, 112, 67, 0.45);
 }
 
 .dropdownMenu {
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   position: absolute;
-  top: 120%;
+  top: calc(100% + 8px);
   right: 0;
   display: flex;
   flex-direction: column;
-  z-index: 1000;
-  min-width: 160px;
+  z-index: 2000;
+  min-width: 185px;
+  overflow: hidden;
 }
 
 .dropdownItem {
-  padding: 0.6rem 1rem;
+  padding: 0.65rem 1.1rem;
   background: transparent;
   border: none;
   text-align: right;
   cursor: pointer;
-  font-size: 0.95rem;
-  transition: background-color 0.2s ease;
+  font-size: 0.93rem;
+  color: #333;
+  transition: background-color 0.15s ease;
+  width: 100%;
 }
 
 .dropdownItem:hover {
-  background-color: #f5f5f5;
+  background-color: #fff4f0;
+  color: var(--main-color);
 }
 
+.dropdownDivider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 0.2rem 0;
+}
 
-/* ============================= */
-/* אזור חיפוש                   */
-/* ============================= */
+.dropdownLogout {
+  color: #e53935;
+}
 
+.dropdownLogout:hover {
+  background-color: #fff0f0;
+  color: #c62828;
+}
+
+/* ===== SEARCH (אמצע) ===== */
 .searchSection {
   flex: 1;
-  max-width: 50%;
+  max-width: 480px;
   position: relative;
-  margin-inline: 1rem;
 }
 
 .searchInput {
   width: 100%;
-  padding: 0.5rem;
-  border-radius: var(--radius);
-  border: 1px solid #ced4da;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid #e0e0e0;
+  font-size: 0.95rem;
   text-align: center;
+  background: #f8f8f8;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.15);
+  background: white;
 }
 
 .searchResults {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
   background-color: #fff;
-  border: 1px solid #ced4da;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-light);
-  max-height: 200px;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  max-height: 220px;
   overflow-y: auto;
-  z-index: 1000;
-  margin-top: 0.5rem;
+  z-index: 2000;
 }
 
 .searchResultItem {
-  padding: 0.5rem;
-  border-bottom: 1px solid #eee;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #f5f5f5;
   cursor: pointer;
+  font-size: 0.93rem;
+  margin: 0;
   transition: background-color var(--transition);
 }
 
 .searchResultItem:hover {
-  background-color: #f9f9f9;
+  background-color: #fff4f0;
+  color: var(--main-color);
 }
 
-/* ============================= */
-/* כפתור חזרה                   */
-/* ============================= */
+.searchResultItem:last-child {
+  border-bottom: none;
+}
 
+/* ===== AUTH LINKS (כשלא מחובר) ===== */
+.authLink {
+  background-color: var(--main-color);
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.93rem;
+  font-weight: bold;
+  transition: background-color var(--transition);
+  white-space: nowrap;
+}
+
+.authLink:hover {
+  background-color: #e64a19;
+}
+
+/* ===== כפתור חזרה (בדפים אחרים) ===== */
 .backLink {
   position: fixed;
   top: 1rem;
@@ -220,124 +209,40 @@ body {
   box-shadow: var(--shadow-heavy);
 }
 
-/* ============================= */
-/* תוכן כללי + Layout           */
-/* ============================= */
-
-.container {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  height: calc(100vh - 80px);
-  overflow: hidden;
-}
-
-.content {
-  flex: 1;
-  width: 100%;
-  overflow-y: auto;
-  padding: 1rem;
-}
-
-/* ============================= */
-/* רשימת פריטים (מתכונים וכו׳) */
-/* ============================= */
-
-.item {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem 0;
-}
-
-/* ============================= */
-/* כפתורי אוטנטיקציה             */
-/* ============================= */
-
-.authLink {
-  background-color: var(--main-color);
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  font-size: 0.95rem;
-  font-weight: bold;
-  transition: background-color var(--transition);
-  white-space: nowrap;
-}
-
-.authLink:hover {
-  background-color: #e64a19;
-}
-
-.authButton {
-  background-color: #e0e0e0;
-  color: #333;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  font-size: 0.95rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color var(--transition);
-  white-space: nowrap;
-}
-
-.authButton:hover {
-  background-color: #bdbdbd;
-}
-
-/* ============================= */
-/* מסכים קטנים (מובייל)         */
-/* ============================= */
-
+/* ===== מובייל ===== */
 @media (max-width: 600px) {
   .header {
     flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.3rem 0.5rem;
+    gap: 0.4rem;
+    padding: 0 0.3rem;
   }
 
-  /* שורה ראשונה: auth + toggle */
+  .siteName {
+    display: none;
+  }
+
   .authSection {
     order: 1;
-    gap: 0.4rem;
     flex: 1;
   }
 
-  .toggleButton {
-    order: 2;
-    padding: 0.4rem 0.7rem;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
-
-  /* שורה שנייה: חיפוש בכל הרוחב */
   .searchSection {
-    order: 3;
+    order: 2;
     max-width: 100%;
-    width: 100%;
-    margin: 0;
     flex: 1 1 100%;
-  }
-
-  .authLink {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.85rem;
-  }
-
-  .welcomeMessage {
-    font-size: 0.95rem;
-    padding: 0.5rem 0.8rem;
-  }
-
-  .dropdownMenu {
-    min-width: 130px;
   }
 
   .userName {
     font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .authLink {
     padding: 0.4rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .dropdownMenu {
+    min-width: 160px;
   }
 }
