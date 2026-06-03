@@ -5,6 +5,7 @@ userRouter = express.Router();
 const userService = require('./user.service');
 const recipeService = require('../recipe/recipe.service');
 
+
 userRouter.post('/', async (req, res) => {
     try {
         let result = await userService.addNewUser(req.body);
@@ -46,6 +47,8 @@ userRouter.post('/find', async (req, res) => {
 userRouter.post('/add/favoriteRecipe', async (req, res) => {
     let email = req.body.email;
     let recipe = req.body.recipe;
+    console.log(email);
+    
     try {
         let result = await userService.addRecipe({ email }, { recipe });
         console.log(result, 111);
@@ -55,7 +58,7 @@ userRouter.post('/add/favoriteRecipe', async (req, res) => {
         console.log(error);
         res.status(400).send(error.message);
     }
-    // }
+  
 })
 
 
@@ -83,6 +86,25 @@ userRouter.delete('/:id', async (req, res) => {
     }
 })
 
+userRouter.get('/all-users', async (req, res) => {
+    try {
+        const users = await userService.getAllUsers();
+        res.send(users);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+userRouter.patch('/:id/set-role', async (req, res) => {
+    try {
+        const { role } = req.body;
+        const result = await userService.setUserRole(req.params.id, role);
+        res.send(result);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
 userRouter.get('/all/:id', async (req, res) => {
     try {
         let user = await userService.allFavorite(req.params.id);
@@ -97,41 +119,45 @@ userRouter.get('/all/:id', async (req, res) => {
 
 
 
-userRouter.get('/all/favorite/:email', async (req, res) => {
+// userRouter.get('/all/favorite/:email', async (req, res) => {
+//   console.log("params:", req.params);
+
+//   try {
+//     const user = await userService.readUser({ email: req.params.email });
+//     const favoriteList = user.favorite;
+
+//     // map מחזיר מערך של Promises
+//     const response = await Promise.all(
+//       favoriteList.map(async (item) => {
+//         console.log("favorite item:", item);
+//         const recipe = await recipeService.readOneByName(item.recipe);
+//         console.log("recipe:", recipe);
+//         return recipe;
+//       })
+//     );
+
+//     res.send(response);
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(400).send(error.message);
+//   }
+// });
+
+
+
+userRouter.put('/views/update', async (req, res) => {
+    console.log("robin isn't defined");
     try {
-        console.log(req.params.email);
-        let user = await userService.readUser({ email: req.params.email });
-        let result = user.favorite;
-        let response = [];
-        let getResult = result.map((data, index) => {
-            async () => {
-                console.log(data);
-                let temp = await recipeService.readOneByName(data.recipe)
-                response.push(temp);
-                console.log(temp);
-            }
-        })
-        res.send(result);
+        let user = await recipeService.readOne(id);
+        let views = user.views;
+        console.log(views);
+        let response = await recipeService.
+        res.send(response);
     }
     catch (error) {
         res.status(400).send(error.message);
     }
 })
-
-
-// userRouter.put('/views/update', async (req, res) => {
-//     console.log("robin isn't defined");
-//     try {
-//         let user = await recipeService.readOne(id);
-//         let views = user.views;
-//         console.log(views);
-//         let response = await recipeService.
-//         res.send(response);
-//     }
-//     catch (error) {
-//         res.status(400).send(error.message);
-//     }
-// })
 
 userRouter.post('/search/byName', async (req, res) => {
     try {

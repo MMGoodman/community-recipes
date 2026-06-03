@@ -10,6 +10,7 @@ import UserFavoriteRecipe from './components/UserFavoriteRecipe';
 import UserRecipes from './components/UserRecipes';
 import DeleteRecipe from './components/DeleteRecipe';
 import AdminEditRecipe from './components/AdminEditResipe';
+import AdminPanel from './components/AdminPanel';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/userRecipes' element={<UserRecipes />} />
           <Route path='/deleteRecipe' element={<DeleteRecipe />} />
           <Route path='/edit-recipe/:recipeId' element={<AdminEditRecipe />} />
+          <Route path='/admin' element={<AdminPanel />} />
         </Routes>
       </BrowserRouter>
     </DataProvider>

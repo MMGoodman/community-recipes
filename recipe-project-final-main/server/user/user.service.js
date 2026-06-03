@@ -51,8 +51,22 @@ async function readUser(filter = {}) {
 
   return user;
 }
+async function getAllUsers() {
+    return await userModel.find({}, { password: 0 });
+}
+
+async function setUserRole(userId, role) {
+    const update = {
+        admin: role === 'admin',
+        editor: role === 'editor'
+    };
+    return await userModel.findByIdAndUpdate(userId, update, { new: true, select: '-password' });
+}
+
 module.exports = {
   addNewUser,
   handelValidation,
-  readUser
+  readUser,
+  getAllUsers,
+  setUserRole
 };

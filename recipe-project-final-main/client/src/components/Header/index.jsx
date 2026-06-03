@@ -63,9 +63,27 @@ function Header({ toggleSidebar, isSidebarOpen }) {
             </div>
 
             {isMenuOpen && (
-              <button onClick={handelOffButton} className={style.authButton}>
-                להתנתק
-              </button>
+              <div className={style.dropdownMenu}>
+                {curentUser?.admin && (
+                  <button
+                    className={style.dropdownItem}
+                    onClick={() => { navigate('/admin'); setIsMenuOpen(false); }}
+                  >
+                    🛠️ לוח ניהול
+                  </button>
+                )}
+                {curentUser?.admin && (
+                  <button
+                    className={style.dropdownItem}
+                    onClick={() => { navigate('/deleteRecipe'); setIsMenuOpen(false); }}
+                  >
+                    📋 מתכונים לאישור
+                  </button>
+                )}
+                <button onClick={handelOffButton} className={style.dropdownItem}>
+                  🚪 התנתקות
+                </button>
+              </div>
             )}
           </div>
         ) : (
