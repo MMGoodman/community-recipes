@@ -5,19 +5,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import style from './style.module.css';
 
 function AdminPanel() {
-  const { curentUser } = useContext(DataContext);
+  const { curentUser, isLoading } = useContext(DataContext);
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
+    if (isLoading) return;
     if (!curentUser?.admin) {
       navigate('/');
       return;
     }
     fetchUsers();
-  }, [curentUser]);
+  }, [curentUser, isLoading]);
 
   const fetchUsers = async () => {
     try {
