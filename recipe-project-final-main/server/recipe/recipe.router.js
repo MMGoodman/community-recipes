@@ -22,14 +22,11 @@ recipeRouter.get('/all/tags', (req, res) => {
 });
 
 recipeRouter.get('/:recipeId', async (req, res) => {
-    console.log(req.params.recipeId,11111);
     try {
         let recipe = await recipeService.readOne(req.params.recipeId);
-        console.log(recipe);
         res.send(recipe);
     }
     catch (error) {
-        console.log(error);
         res.status(400).send(error.message);
     }
 })
@@ -53,13 +50,10 @@ recipeRouter.post('/find/by', async (req, res) => {
     try {
         let field = req.body.field;
         let filter = req.body.filter;
-        console.log(field, filter);
         let recipe = await recipeService.findBy(field, filter);
-        console.log(recipe);
         res.send(recipe);
     }
     catch (error) {
-        console.log(error);
         res.status(400).send(error.message);
     }
 })
@@ -69,11 +63,9 @@ recipeRouter.post('/search', async (req, res) => {
     try {
         let filter = req.body.filter;
         let recipe = await recipeService.search(filter);
-        console.log(recipe);
         res.send(recipe);
     }
     catch (error) {
-        console.log(error);
         res.status(400).send(error.message);
     }
 })
@@ -84,12 +76,10 @@ recipeRouter.post('/search', async (req, res) => {
 recipeRouter.post('/status/:isActive', async (req, res) => {
     let isActive = req.params.isActive;
     try {
-        console.log(isActive);
         let data = await recipeService.readAll(isActive);
         res.send(data);
     }
     catch (error) {
-        console.log(error);
         res.status(400).send(error.message);
     }
 });
@@ -99,23 +89,16 @@ recipeRouter.post('/status/:isActive', async (req, res) => {
 
 recipeRouter.post('/add', async (req, res) => {
     try {
-        console.log(req.body.data, "from add router")
         let result = await recipeService.addNewRecipe(req.body.data);
-        console.log(result + "result");
         res.send(result);
     }
     catch (error) {
-        console.log(error);
         res.status(400).send(error.message);
     }
 })
 
 recipeRouter.put('/views/update', async (req, res) => {
-    console.log("robin isn't defined");
     try {
-        // let user = await recipeService.readOne(id);
-        // let views = user.views;
-        // console.log(views);
         let response = await recipeService.updateViews(req.body.id);
         res.send(response);
     }
@@ -132,9 +115,6 @@ recipeRouter.patch('/admin/update/:id', async (req, res) => {
     try {
         const recipeId = req.params.id;
         const updateData = req.body;
-
-        console.log(recipeId, updateData, 1111);
-
         const updatedRecipe = await recipeService.updateRecipeAndActivate(recipeId, updateData);
 
         if (!updatedRecipe) {

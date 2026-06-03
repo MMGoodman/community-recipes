@@ -21,9 +21,6 @@ function DeleteRecipe() {
     fetchRecipes();
   }, []);
 
-console.log(recipes);
-
-  
   return (
     <div className={style.content}>
 <Link to="/" className={style.backLink}>

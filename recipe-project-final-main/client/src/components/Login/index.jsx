@@ -32,8 +32,6 @@ function Login() {
     e.preventDefault();
     if (!validateForm()) return;
 
-console.log("👉 נשלח לשרת:", { fName, lName, password });
-
     try {
       const user = await axios.post(`${import.meta.env.VITE_API_URL}/api/user/find`, {
         lName,
@@ -41,7 +39,6 @@ console.log("👉 נשלח לשרת:", { fName, lName, password });
         password,
       });
       setCurentUser(user.data);
-      console.log("🔼 שליחה לשרת:", { lName, fName, password });
 
       user.data._id ? navigate("/") : setFlag(false);
     } catch (error) {

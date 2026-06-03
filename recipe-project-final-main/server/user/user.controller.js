@@ -1,5 +1,4 @@
-const { findOne } = require('../recipe/recipe.module');
-const userModel = require('./user.module'); // ✅ תואם לשימוש שלך בקובץ
+const userModel = require('./user.module');
 
 
 async function create(data) {
@@ -11,7 +10,6 @@ async function readOne(filter) {
 }
 
 async function upDate(filter, data) {
-    console.log(filter, data, "controller");
     let result = await userModel.findOneAndUpdate(filter, data);
     return result;
 }

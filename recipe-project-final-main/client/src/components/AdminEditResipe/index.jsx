@@ -30,7 +30,6 @@ function AdminEditRecipe() {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/recipe/${recipeId}`
         );
-        console.log(response.data);
         setRecipe(response.data);
         setFormData({
           name: response.data.name,

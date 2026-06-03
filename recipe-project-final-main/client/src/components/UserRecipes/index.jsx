@@ -18,8 +18,6 @@ function UserRecipes() {
           field: "owner",
           filter: curentUser._id,
         });
-        console.log(result.data);
-        
         setRecipes(result.data);
       } catch (error) {
         console.log(error);

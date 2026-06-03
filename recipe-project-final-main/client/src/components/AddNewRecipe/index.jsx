@@ -474,8 +474,7 @@ function AddNewRecipe() {
             tags: allTags
         };
         try {
-            const result = await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/add`, { data: curentRecipe });
-            console.log(result);
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/add`, { data: curentRecipe });
             setShowModal(false);
             navigate('/');
         } catch (error) {

@@ -45,9 +45,7 @@ async function readOneByName(data) {
 }
 
 async function updateViews(id) {
-  console.log("service", id);
   let result = await recipeController.upDateViews({ _id: id });
-  console.log("result service ", result);
   return result;
 }
 
@@ -63,9 +61,7 @@ async function findBy(field, filter) {
 
 
 async function search(filter) {
-  // const filter2= {"name":{"$regex" : `^${filter}`}};
   const response = recipeController.search(filter);
-  console.log(response, "response");
   return response;
 }
 
@@ -76,15 +72,8 @@ async function getAllTags() {
 }
 
 async function updateRecipeAndActivate(recipeId, updateData) {
-  // הוספת הלוגיקה לעדכון השדות והפעלת המתכון
-  console.log(updateData);
-
   updateData.isActive = true;
-
-  console.log(updateData, 22222);
-
   const updatedRecipe = await recipeController.updateRecipe(recipeId, updateData);
-
   return updatedRecipe;
 }
 
