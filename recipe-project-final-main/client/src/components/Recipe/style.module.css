@@ -61,6 +61,13 @@
     border-color: #ffccd1;
 }
 
+.likeButtonActive {
+    background-color: #ffeaec;
+    border-color: #ff8a9a;
+    color: #dc3545;
+    font-weight: bold;
+}
+
 .adminButton {
     color: #6c757d;
 }

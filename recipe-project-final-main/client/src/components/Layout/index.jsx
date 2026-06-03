@@ -5,8 +5,7 @@ import { useState } from 'react';
 import ShowTags from '../ShowTags/index.jsx';
 
 function Layout() {
-  const [curentTag, setCurentTag] = useState();
-  const [allTags, setAllTags] = useState([]);
+  const [curentTags, setCurentTags] = useState([]);
 
   return (
     <div className={style.main}>
@@ -15,15 +14,13 @@ function Layout() {
       </div>
 
       <div className={style.tagsBar}>
-        <ShowTags setCurentTag={setCurentTag} curentTag={curentTag} />
+        <ShowTags curentTags={curentTags} setCurentTags={setCurentTags} />
       </div>
 
       <div className={style.content}>
         <Content
-          curentTag={curentTag}
-          setCurentTag={setCurentTag}
-          allTags={allTags}
-          setAllTags={setAllTags}
+          curentTags={curentTags}
+          setCurentTags={setCurentTags}
         />
       </div>
     </div>

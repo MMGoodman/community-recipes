@@ -15,7 +15,8 @@ function Recipe() {
     const [recipe, setRecipe] = useState();
     const [modalVisible, setModalVisible] = useState(false);
     const [tagRecipes, setTagRecipes] = useState([]);
-    const { curentUser } = useContext(DataContext);
+    const [isFavorite, setIsFavorite] = useState(false);
+    const { curentUser, setCurentUser } = useContext(DataContext);
 
 
     useEffect(() => {
@@ -57,18 +58,43 @@ function Recipe() {
         recipe && updateViews();
     }, [recipe]);
 
+    // בדיקה האם המתכון כבר במועדפים כשנטען המתכון
+    useEffect(() => {
+        if (curentUser && recipe) {
+            const favList = curentUser.favorite || [];
+            setIsFavorite(favList.some(f => f.recipe === recipe.name));
+        }
+    }, [curentUser, recipe]);
+
     async function handleLikes() {
-        if (curentUser?._id) {
-            try {
+        if (!curentUser?._id) {
+            alert("אתה צריך להתחבר כדי להוסיף למועדפים");
+            return;
+        }
+        try {
+            if (isFavorite) {
+                // הסרה ממועדפים
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/user/delete/favorite`, {
+                    userId: curentUser._id,
+                    recipeName: recipe.name,
+                });
+                setIsFavorite(false);
+                // עדכון הקונטקסט
+                const updatedFavorite = (curentUser.favorite || []).filter(f => f.recipe !== recipe.name);
+                setCurentUser({ ...curentUser, favorite: updatedFavorite });
+            } else {
+                // הוספה למועדפים
                 await axios.post(`${import.meta.env.VITE_API_URL}/api/user/add/favoriteRecipe`, {
                     email: curentUser.email,
                     recipe: recipe.name,
                 });
-            } catch (error) {
-                console.log(error.message);
+                setIsFavorite(true);
+                // עדכון הקונטקסט
+                const updatedFavorite = [...(curentUser.favorite || []), { recipe: recipe.name }];
+                setCurentUser({ ...curentUser, favorite: updatedFavorite });
             }
-        } else {
-            alert("אתה צריך להירשם");
+        } catch (error) {
+            console.log(error.message);
         }
     }
 
@@ -101,8 +127,11 @@ function Recipe() {
             <div className={style.navigationBar}>
                 <Link to={'/'} className={style.backLink}> חזרה </Link>
                 <div className={style.actionButtons}>
-                    <button className={style.likeButton} onClick={handleLikes}>
-                        הוספה למועדפים
+                    <button
+                        className={`${style.likeButton} ${isFavorite ? style.likeButtonActive : ''}`}
+                        onClick={handleLikes}
+                    >
+                        {isFavorite ? '❤️ הסר ממועדפים' : '🤍 הוסף למועדפים'}
                     </button>
                     {curentUser?.admin && <button
                         className={style.adminButton}

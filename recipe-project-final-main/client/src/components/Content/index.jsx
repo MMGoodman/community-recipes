@@ -1,59 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RecipeList from "../RecipeList";
 import style from "./style.module.css";
 import axios from "axios";
-import { useEffect } from "react";
 
-function Content({ curentTag, setCurentTag }) {
-  const [recipes, setRecipes] = useState([]); // מערך שמחזיק את כל המתכונים
+function Content({ curentTags = [], setCurentTags }) {
+  const [recipes, setRecipes] = useState([]);
 
-  //פה מופעלת הקריאה במקרה של סינון לפי תגים
-  useEffect(() => {
-    const importDataByTag = async () => {
-      try {
-        await axios
-          .post(`${import.meta.env.VITE_API_URL}/api/recipe/find/by`, {
-            field: "tags",
-            filter: curentTag,
-          })
-          .then((res) => {
-            setRecipes(Array.isArray(res.data) ? res.data : []);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    curentTag && importDataByTag();
-  }, [curentTag]);
-
-  //פה מופעלת הקריאה בכל כניסה לדף ומביאה את כל המתכונים בתנאי שעברו אישור מנהל
+  // טעינת כל המתכונים בכניסה
   const importData = async () => {
     try {
       let response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/recipe/status/${true}`
       );
       setRecipes(Array.isArray(response.data) ? response.data : []);
-      setCurentTag("");
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  // סינון לפי תגיות (אחת או יותר)
   useEffect(() => {
-    importData();
-  }, []);
+    if (!curentTags || curentTags.length === 0) {
+      importData();
+      return;
+    }
+
+    const filterByTags = async () => {
+      try {
+        // קבלת כל מתכונים פעילים וסינון לפי כל התגיות הנבחרות
+        let response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/recipe/status/${true}`
+        );
+        const all = Array.isArray(response.data) ? response.data : [];
+        const filtered = all.filter(recipe =>
+          curentTags.every(tag => recipe.tags?.includes(tag))
+        );
+        setRecipes(filtered);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    filterByTags();
+  }, [curentTags]);
 
   return (
     <div className={style.content}>
-      {curentTag && (
-        <button onClick={() => importData()} className={style.refreshButton}>
-         רענון
-        </button>
+      {curentTags.length > 0 && (
+        <div className={style.filterInfo}>
+          <span>מסנן לפי: {curentTags.join(' + ')}</span>
+          <button onClick={() => setCurentTags([])} className={style.clearButton}>
+            ✕ הסר סינון
+          </button>
+        </div>
       )}
 
       <div className={style.item}>
-        {recipes &&
-          recipes.map((item) => <RecipeList key={item._id} item={item} />)}
+        {recipes.length > 0
+          ? recipes.map((item) => <RecipeList key={item._id} item={item} />)
+          : curentTags.length > 0 && (
+            <p className={style.noResults}>לא נמצאו מתכונים עם כל התגיות שנבחרו</p>
+          )
+        }
       </div>
     </div>
   );

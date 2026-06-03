@@ -15,7 +15,7 @@ function UserFavoriteRecipe() {
     const getUserRecipe = async () => {
       try {
         const result = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/user/all/favorite/${curentUser.email}`
+          `${import.meta.env.VITE_API_URL}/api/user/all/${curentUser._id}`
         );
         const recipeNames = result.data.map((item) => item.recipe);
 

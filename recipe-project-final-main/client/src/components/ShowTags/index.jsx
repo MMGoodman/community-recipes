@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import axios from 'axios';
 
-function ShowTags({ setCurentTag, curentTag }) {
+function ShowTags({ setCurentTags, curentTags = [] }) {
   const [allTags, setAllTags] = useState([]);
 
-  const handelTagButton = (tag) => {
-    setCurentTag(tag === curentTag ? '' : tag);
+  const handleTagClick = (tag) => {
+    setCurentTags(prev => {
+      if (prev.includes(tag)) {
+        return prev.filter(t => t !== tag); // הסר תג
+      } else {
+        return [...prev, tag]; // הוסף תג
+      }
+    });
   };
 
   useEffect(() => {
@@ -23,11 +29,19 @@ function ShowTags({ setCurentTag, curentTag }) {
 
   return (
     <div className={styles['tags-container']}>
+      {curentTags.length > 0 && (
+        <button
+          className={`${styles.tag} ${styles.clearBtn}`}
+          onClick={() => setCurentTags([])}
+        >
+          ✕ נקה הכל
+        </button>
+      )}
       {allTags.map((tag, index) => (
         <button
           key={index}
-          onClick={() => handelTagButton(tag)}
-          className={`${styles.tag} ${curentTag === tag ? styles.active : ''}`}
+          onClick={() => handleTagClick(tag)}
+          className={`${styles.tag} ${curentTags.includes(tag) ? styles.active : ''}`}
         >
           {tag}
         </button>
