@@ -31,7 +31,7 @@ function SignIn() {
 
   async function conect(data) {
     try {
-      const user = await axios.post('http://localhost:8000/api/user', data);
+      const user = await axios.post(`${import.meta.env.VITE_API_URL}/api/user`, data);
       setGoodSign("נרשמת בהצלחה 🎉");
       setCurentUser(user.data);
       reset();

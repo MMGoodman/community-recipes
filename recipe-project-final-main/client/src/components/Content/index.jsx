@@ -12,7 +12,7 @@ function Content({ curentTag, setCurentTag }) {
     const importDataByTag = async () => {
       try {
         await axios
-          .post(`http://localhost:8000/api/recipe/find/by`, {
+          .post(`${import.meta.env.VITE_API_URL}/api/recipe/find/by`, {
             field: "tags",
             filter: curentTag,
           })
@@ -30,7 +30,7 @@ function Content({ curentTag, setCurentTag }) {
   const importData = async () => {
     try {
       let response = await axios.post(
-        `http://localhost:8000/api/recipe/status/${true}`
+        `${import.meta.env.VITE_API_URL}/api/recipe/status/${true}`
       );
       setRecipes(response.data);
       setCurentTag("");

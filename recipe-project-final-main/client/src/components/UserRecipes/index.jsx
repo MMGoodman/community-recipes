@@ -14,7 +14,7 @@ function UserRecipes() {
 
     const getUserRecipe = async () => {
       try {
-        const result = await axios.post(`http://localhost:8000/api/recipe/find/by`, {
+        const result = await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/find/by`, {
           field: "owner",
           filter: curentUser._id,
         });

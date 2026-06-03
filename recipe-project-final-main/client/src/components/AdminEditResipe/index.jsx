@@ -28,7 +28,7 @@ function AdminEditRecipe() {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/recipe/${recipeId}`
+          `${import.meta.env.VITE_API_URL}/api/recipe/${recipeId}`
         );
         console.log(response.data);
         setRecipe(response.data);
@@ -92,7 +92,7 @@ function AdminEditRecipe() {
   const handleFinalApproval = async () => {
     try {
       await axios.patch(
-        `http://localhost:8000/api/recipe/admin/update/${recipeId}`,
+        `${import.meta.env.VITE_API_URL}/api/recipe/admin/update/${recipeId}`,
         formData
       );
       alert("המתכון עודכן בהצלחה!");
@@ -106,7 +106,7 @@ function AdminEditRecipe() {
   const handelDeleteRecipe = async () => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/recipe/admin/delete/${recipeId}`
+        `${import.meta.env.VITE_API_URL}/api/recipe/admin/delete/${recipeId}`
       );
       alert("המתכון נמחק בהצלחה");
       setShowDeleteModal(false);

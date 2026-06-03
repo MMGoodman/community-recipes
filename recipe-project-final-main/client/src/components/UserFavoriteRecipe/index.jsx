@@ -15,7 +15,7 @@ function UserFavoriteRecipe() {
     const getUserRecipe = async () => {
       try {
         const result = await axios.get(
-          `http://localhost:8000/api/user/all/favorite/${curentUser.email}`
+          `${import.meta.env.VITE_API_URL}/api/user/all/favorite/${curentUser.email}`
         );
         const recipeNames = result.data.map((item) => item.recipe);
 
@@ -23,7 +23,7 @@ function UserFavoriteRecipe() {
         for (let name of recipeNames) {
           try {
             const recipeResult = await axios.post(
-              "http://localhost:8000/api/recipe/by/name",
+              `${import.meta.env.VITE_API_URL}/api/recipe/by/name`,
               { name }
             );
             recipes.push(recipeResult.data);
@@ -47,7 +47,7 @@ function UserFavoriteRecipe() {
       recipeName: recipe.name,
     };
     try {
-      await axios.post("http://localhost:8000/api/user/delete/favorite", body);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/user/delete/favorite`, body);
       setFavoriteRecipe((prev) => prev.filter((r) => r.name !== recipe.name));
     } catch (error) {
       console.log(error);

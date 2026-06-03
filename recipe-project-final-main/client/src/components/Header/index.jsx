@@ -15,7 +15,7 @@ function Header({ toggleSidebar, isSidebarOpen }) {
     const bringData = async () => {
       try {
         const result = await axios.post(
-          "http://localhost:8000/api/recipe/search",
+          `${import.meta.env.VITE_API_URL}/api/recipe/search`,
           {
             filter: search,
           }

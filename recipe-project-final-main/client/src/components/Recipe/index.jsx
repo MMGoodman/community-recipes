@@ -21,7 +21,7 @@ function Recipe() {
     useEffect(() => {
         const getData = async () => {
             try {
-                let response = await axios.get(`http://localhost:8000/api/recipe/${id}`);
+                let response = await axios.get(`${import.meta.env.VITE_API_URL}/api/recipe/${id}`);
                 setRecipe(response.data);
             } catch (error) {
                 console.log(error);
@@ -30,7 +30,7 @@ function Recipe() {
 
         const getDataByName = async () => {
             try {
-                let response = await axios.post(`http://localhost:8000/api/recipe/by/name`, { name: id });
+                let response = await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/by/name`, { name: id });
                 setRecipe(response.data);
             } catch (error) {
                 console.log(error);
@@ -48,7 +48,7 @@ function Recipe() {
         const updateViews = async () => {
             if (recipe) {
                 try {
-                    await axios.put(`http://localhost:8000/api/recipe/views/update`, { id: recipe._id });
+                    await axios.put(`${import.meta.env.VITE_API_URL}/api/recipe/views/update`, { id: recipe._id });
                 } catch (error) {
                     console.log(error);
                 }
@@ -60,7 +60,7 @@ function Recipe() {
     async function handleLikes() {
         if (curentUser?._id) {
             try {
-                await axios.post(`http://localhost:8000/api/user/add/favoriteRecipe`, {
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/user/add/favoriteRecipe`, {
                     email: curentUser.email,
                     recipe: recipe.name,
                 });
@@ -75,7 +75,7 @@ function Recipe() {
     const handleTagClick = async (tag) => {
         console.log(tag, "tag from recipe");
         try {
-            const response = await axios.post(`http://localhost:8000/api/recipe/find/by`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/find/by`, {
                 field: "tags",
                 filter: tag,
             });

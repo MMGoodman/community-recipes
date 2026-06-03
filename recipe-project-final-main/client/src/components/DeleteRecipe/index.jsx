@@ -12,7 +12,7 @@ function DeleteRecipe() {
     const fetchRecipes = async () => {
       let isActive = false;
       try {
-        let response = await axios.post(`http://localhost:8000/api/recipe/status/${isActive}`);
+        let response = await axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/status/${isActive}`);
         setRecipes(response.data);
       } catch (error) {
         console.log(error.message);

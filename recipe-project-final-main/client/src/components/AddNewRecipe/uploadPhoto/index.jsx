@@ -66,7 +66,7 @@ export default function UploadImage({setImageUrl}) {
     setLoading(true);
     try {
       axios
-        .post("http://localhost:8000/api/uplaod/image", { image: base64 })
+        .post(`${import.meta.env.VITE_API_URL}/api/uplaod/image`, { image: base64 })
         .then((res) => {
           setUrl(res.data);
           setImageUrl(res.data);

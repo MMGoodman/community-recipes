@@ -35,7 +35,7 @@ function Login() {
 console.log("👉 נשלח לשרת:", { fName, lName, password });
 
     try {
-      const user = await axios.post(`http://localhost:8000/api/user/find`, {
+      const user = await axios.post(`${import.meta.env.VITE_API_URL}/api/user/find`, {
         lName,
         fName,
         password,
