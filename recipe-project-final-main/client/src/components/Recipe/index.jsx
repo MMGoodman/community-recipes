@@ -39,7 +39,7 @@ function Recipe() {
             }
         };
 
-        if (!isNaN(id.charAt(0))) {
+        if (/^\d+$/.test(id)) {
             getData();
         } else {
             getDataByName();

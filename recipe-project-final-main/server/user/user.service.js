@@ -1,56 +1,64 @@
+const bcrypt = require('bcryptjs');
 const userController = require('./user.controller');
-const userModel = require('./user.module');
 
 
 async function addNewUser(data) {
     if (!data?.email) throw { code: 400, message: "email input error" }
 
-    let user = await userController.readOne({ email: data.email });
+    let user = await userController.readByEmail(data.email);
     if (user) throw { code: user.isActive ? 400 : 450, message: "המשתמש כבר קיים במערכת" };
 
     let newUserMapped = await handelValidation(data);
 
-    const adminCount = await userModel.countDocuments({ admin: true });
+    // המשתמש הראשון שנרשם הופך למנהל
+    const adminCount = await userController.countAdmins();
     if (adminCount === 0) {
         newUserMapped.admin = true;
     }
 
     let result = await userController.create(newUserMapped);
-    return result;
+    return withFavorites(result);
 }
 
 async function handelValidation(reqBody) {
+    // הסיסמה נשמרת במסד רק בצורה מוצפנת
     return {
-        lName: reqBody.lName,
-        fName: reqBody.fName,
-        email: reqBody.email,
-        password: reqBody.password
+        lName: reqBody.lName?.trim(),
+        fName: reqBody.fName?.trim(),
+        email: reqBody.email?.trim(),
+        password: await bcrypt.hash(reqBody.password, 10)
     };
 }
 
+// התחברות: מחפשים לפי שם פרטי ושם משפחה ומשווים את הסיסמה המוצפנת
 async function readUser(filter = {}) {
-    const cleanFilter = {
-        fName: filter.fName?.trim(),
-        lName: filter.lName?.trim(),
-        password: filter.password?.trim(),
-    };
+    const fName = filter.fName?.trim();
+    const lName = filter.lName?.trim();
+    const password = filter.password?.trim();
 
-    const user = await userModel.findOne({
-        fName: new RegExp(`^${cleanFilter.fName}$`, 'i'),
-        lName: new RegExp(`^${cleanFilter.lName}$`, 'i'),
-        password: cleanFilter.password,
-    });
+    const users = await userController.readByName(fName, lName);
+    for (const user of users) {
+        if (await bcrypt.compare(password, user.password)) {
+            delete user.password;
+            return withFavorites(user);
+        }
+    }
+    return null;
+}
 
+// הלקוח מצפה לרשימת המועדפים בתוך אובייקט המשתמש
+async function withFavorites(user) {
+    user.favorite = await userController.readFavorites(user._id);
     return user;
 }
 
 // הוספת מתכון למועדפים
 async function addRecipe(filter, data) {
-    const user = await userController.readOne(filter);
+    const user = await userController.readByEmail(filter.email);
     if (!user) throw new Error('משתמש לא נמצא');
-    const alreadyFav = user.favorite?.some(f => f.recipe === data.recipe);
-    if (alreadyFav) throw new Error('המתכון כבר במועדפים');
-    return await userController.upDate(filter, { $push: { favorite: data } });
+    const added = await userController.addFavorite(user._id, data.recipe);
+    if (added === 0) throw new Error('המתכון כבר במועדפים');
+    return { added };
 }
 
 // מחיקת מתכון ממועדפים
@@ -60,8 +68,7 @@ async function deleteFavorite({ userId, recipeName }) {
 
 // קבלת רשימת המועדפים של משתמש לפי ID
 async function allFavorite(id) {
-    const user = await userController.readOne({ _id: id });
-    return user ? (user.favorite || []) : [];
+    return await userController.readFavorites(id);
 }
 
 async function deleteUser(id) {
@@ -69,15 +76,11 @@ async function deleteUser(id) {
 }
 
 async function getAllUsers() {
-    return await userModel.find({}, { password: 0 });
+    return await userController.readAll();
 }
 
 async function setUserRole(userId, role) {
-    const update = {
-        admin: role === 'admin',
-        editor: role === 'editor'
-    };
-    return await userModel.findByIdAndUpdate(userId, update, { new: true, select: '-password' });
+    return await userController.setRole(userId, role === 'admin', role === 'editor');
 }
 
 module.exports = {

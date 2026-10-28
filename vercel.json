@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm install --prefix recipe-project-final-main/server && npm install --prefix recipe-project-final-main/client",
+  "buildCommand": "npm run build --prefix recipe-project-final-main/client",
+  "outputDirectory": "recipe-project-final-main/client/dist",
+  "crons": [
+    { "path": "/api/recipe/all/tags", "schedule": "0 6 * * *" }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -3,22 +3,15 @@ const exprees = require('express');
 recipeRouter = exprees.Router();
 
 
-recipeRouter.get('/all/tags', (req, res) => {
-    recipeService.getAllTags()
-        .then(response => {
-            let allTags = [];
-            if (response) {
-                allTags = response.map(recipe => recipe.tags).flat();
-                let uniqueTags = [...new Set(allTags)];
-                const sortedTags = uniqueTags.sort((a, b) => a.localeCompare(b));
-                res.send(sortedTags);
-            } else {
-                res.send([]);
-            }
-        })
-        .catch(error => {
-            res.status(400).send(error.message);
-        });
+recipeRouter.get('/all/tags', async (req, res) => {
+    try {
+        // התגים חוזרים מהמסד כבר בלי כפילויות וממוינים
+        let tags = await recipeService.getAllTags();
+        res.send(tags);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
 });
 
 recipeRouter.get('/:recipeId', async (req, res) => {
@@ -74,7 +67,7 @@ recipeRouter.post('/search', async (req, res) => {
 
 
 recipeRouter.post('/status/:isActive', async (req, res) => {
-    let isActive = req.params.isActive;
+    let isActive = req.params.isActive === 'true';
     try {
         let data = await recipeService.readAll(isActive);
         res.send(data);

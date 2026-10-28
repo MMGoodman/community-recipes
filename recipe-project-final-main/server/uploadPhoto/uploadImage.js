@@ -19,6 +19,10 @@ const opts = {
 };
 
 function uploadImage(image) {
+  // בלי פרטי Cloudinary שומרים את התמונה (base64 דחוס מהלקוח) ישירות במסד
+  if (!process.env.CLOUD_NAME) {
+    return Promise.resolve(image);
+  }
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(image, opts, (error, result) => {
       if (result && result.secure_url) {

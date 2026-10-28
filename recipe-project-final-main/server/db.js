@@ -1,42 +1,23 @@
-const mongoose = require('mongoose');
+const { Pool } = require('pg');
 const { config } = require('dotenv');
 
-config(); // טוען את המשתנים מקובץ .env
+config();
 
-function connect() {
-  // בדיקה שהמשתנה בכלל קיים לפני שמנסים להתחבר
-  if (!process.env.MONGO_URL) {
-      console.error("❌ Error: MONGO_URL is missing from .env file");
-      return;
-  }
+const isLocal = /localhost|127\.0\.0\.1/.test(process.env.DATABASE_URL || '');
 
-  mongoose
-    .connect(process.env.MONGO_URL, {
-      tls: true,
-      tlsAllowInvalidCertificates: true,
-    })
-    .then(async () => {
-      console.log("✅ Connected to MongoDB");
-      console.log("📦 Database Name:", mongoose.connection.name);
+// מאגר חיבורים אחד לכל השרת (ב-Supabase דרך ה-Transaction pooler)
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    // Supabase דורש חיבור מוצפן; התעודה שלו לא חתומה ע"י גוף ציבורי ולכן לא מאמתים אותה
+    ssl: isLocal ? false : { rejectUnauthorized: false },
+});
 
-      // מחיקת אינדקס ישן username_1 שגורם לבעיה בהרשמה
-      try {
-        const collections = await mongoose.connection.db.listCollections({ name: 'users' }).toArray();
-        if (collections.length > 0) {
-          const indexes = await mongoose.connection.db.collection('users').indexes();
-          const staleIndex = indexes.find(idx => idx.name === 'username_1');
-          if (staleIndex) {
-            await mongoose.connection.db.collection('users').dropIndex('username_1');
-            console.log("🧹 Dropped stale username_1 index from users collection");
-          }
-        }
-      } catch (err) {
-        // האינדקס לא קיים או כבר נמחק - בסדר
-      }
-    })
-    .catch((err) => {
-      console.error("❌ MongoDB connection error:", err.message);
-    });
+pool.on('error', err => console.log("Postgres error:", err.message));
+
+// מריץ שאילתת SQL עם פרמטרים ($1, $2...) ומחזיר את השורות
+async function query(sql, params = []) {
+    const result = await pool.query(sql, params);
+    return result;
 }
 
-module.exports = { connect };
+module.exports = { pool, query };

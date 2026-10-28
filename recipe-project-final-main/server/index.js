@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-require('./db').connect()
 const { userRouter } = require('./user/user.router');
 const { recipeRouter } = require('./recipe/recipe.router');
 const { uplaodRouter } = require('./uploadPhoto/uplaod.router')
@@ -27,6 +26,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(clientDist, 'index.html'));
 });
 
+// ב-Vercel הקובץ נטען כפונקציה (api/index.js) ולא מאזין לפורט
+module.exports = app;
+
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () =>
-  console.log(`the port is listening on ${PORT}`));
+if (require.main === module) {
+  app.listen(PORT, () =>
+    console.log(`the port is listening on ${PORT}`));
+}
