@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import DataContext from "../context/DataContext";
 import style from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 function AdminEditRecipe() {
-  // const { curentUser } = useContext(DataContext);
+  const { curentUser, isLoading } = useContext(DataContext);
   const navigate = useNavigate();
   const { recipeId } = useParams();
   const [recipe, setRecipe] = useState(null);
@@ -22,6 +23,11 @@ function AdminEditRecipe() {
 
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false); // שליטה על המודל למחיקה
+
+  // רק מנהל יכול לערוך, לאשר ולמחוק מתכונים
+  useEffect(() => {
+    if (!isLoading && !curentUser?.admin) navigate("/");
+  }, [curentUser, isLoading]);
 
   // פונקציה להבאת נתוני המתכון מהשרת
   useEffect(() => {

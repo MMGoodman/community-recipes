@@ -42,7 +42,8 @@ function Login() {
 
       user.data._id ? navigate("/") : setFlag(false);
     } catch (error) {
-      console.log(error.message+"?");
+      // השרת מחזיר 400 כשהמשתמש לא נמצא או שהסיסמה שגויה
+      setFlag(false);
     }
   }
 
