@@ -3,8 +3,16 @@
   "installCommand": "npm install --prefix recipe-project-final-main/server && npm install --prefix recipe-project-final-main/client",
   "buildCommand": "npm run build --prefix recipe-project-final-main/client",
   "outputDirectory": "recipe-project-final-main/client/dist",
+  "regions": ["fra1"],
   "crons": [
-    { "path": "/api/recipe/all/tags", "schedule": "0 6 * * *" }
+    { "path": "/api/recipe/all/tags", "schedule": "0 0 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 3 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 6 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 9 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 12 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 15 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 18 * * *" },
+    { "path": "/api/recipe/all/tags", "schedule": "0 21 * * *" }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
