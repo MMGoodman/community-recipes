@@ -11,9 +11,9 @@ function DeleteRecipe() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    // רק מנהל יכול לראות מתכונים שמחכים לאישור
+    // רק מנהל או עורך יכולים לראות מתכונים שמחכים לאישור
     if (isLoading) return;
-    if (!curentUser?.admin) {
+    if (!curentUser?.admin && !curentUser?.editor) {
       navigate('/');
       return;
     }

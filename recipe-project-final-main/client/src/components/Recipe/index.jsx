@@ -135,7 +135,7 @@ function Recipe() {
                     >
                         {isFavorite ? '❤️ הסר ממועדפים' : '🤍 הוסף למועדפים'}
                     </button>
-                    {curentUser?.admin && <button
+                    {(curentUser?.admin || curentUser?.editor) && <button
                         className={style.adminButton}
                         onClick={adminEdit}>
                         <span>✏️</span> לעריכה

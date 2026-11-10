@@ -24,9 +24,9 @@ function AdminEditRecipe() {
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false); // שליטה על המודל למחיקה
 
-  // רק מנהל יכול לערוך, לאשר ולמחוק מתכונים
+  // מנהל ועורך יכולים לערוך ולאשר מתכונים, מחיקה רק למנהל
   useEffect(() => {
-    if (!isLoading && !curentUser?.admin) navigate("/");
+    if (!isLoading && !curentUser?.admin && !curentUser?.editor) navigate("/");
   }, [curentUser, isLoading]);
 
   // פונקציה להבאת נתוני המתכון מהשרת
@@ -352,12 +352,14 @@ function AdminEditRecipe() {
               עדכון מתכון
             </button>
           </form>
-          <button
-            className={style.deleteButton}
-            onClick={() => setShowDeleteModal(true)}
-          >
-            מחיקה
-          </button>
+          {curentUser?.admin && (
+            <button
+              className={style.deleteButton}
+              onClick={() => setShowDeleteModal(true)}
+            >
+              מחיקה
+            </button>
+          )}
         </>
       ) : (
         <p>אין מתכונים נוספים שממתינים לאישור</p>

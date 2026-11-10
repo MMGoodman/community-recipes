@@ -69,12 +69,14 @@ function Header() {
                 <button className={style.dropdownItem} onClick={() => goTo('/userRecipes')}>
                   📖 המתכונים שלי
                 </button>
-                {curentUser?.admin && (
+                {(curentUser?.admin || curentUser?.editor) && (
                   <>
                     <div className={style.dropdownDivider} />
-                    <button className={style.dropdownItem} onClick={() => goTo('/admin')}>
-                      🛠️ לוח ניהול
-                    </button>
+                    {curentUser?.admin && (
+                      <button className={style.dropdownItem} onClick={() => goTo('/admin')}>
+                        🛠️ לוח ניהול
+                      </button>
+                    )}
                     <button className={style.dropdownItem} onClick={() => goTo('/deleteRecipe')}>
                       📋 מתכונים לאישור
                     </button>
