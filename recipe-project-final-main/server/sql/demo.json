@@ -1,0 +1,41 @@
+{
+  "users": [
+    { "fName": "ישראל", "lName": "ישראלי", "email": "demo-admin@example.test", "admin": true, "editor": false },
+    { "fName": "רות", "lName": "מזרחי", "email": "demo-editor@example.test", "admin": false, "editor": true },
+    { "fName": "שרה", "lName": "כהן", "email": "demo-user@example.test", "admin": false, "editor": false },
+    { "fName": "דוד", "lName": "לוי", "email": "demo-user2@example.test", "admin": false, "editor": false }
+  ],
+  "owned": {
+    "demo-user@example.test": ["פנקייק", "חלות", "סלמון בג'ינג'ר ודבש"]
+  },
+  "favorites": {
+    "demo-user@example.test": ["סלט מטבוחה", "קציצות בשר וירקות", "מרק בצל"],
+    "demo-user2@example.test": ["מוסקה חצילים עם בשר טחון", "קנלוני גבינות"]
+  },
+  "pending": [
+    {
+      "owner": "demo-user@example.test",
+      "name": "חומוס ביתי",
+      "servings": 6,
+      "type": "פרווה",
+      "time": "01:30",
+      "level": "בינוני",
+      "product": ["500 גרם גרגירי חומוס", "1/2 כוס טחינה גולמית", "מיץ מ-2 לימונים", "3 שיני שום", "מלח וכמון"],
+      "directions": ["משרים את החומוס ללילה ומבשלים עד שהוא רך מאוד.", "טוחנים במעבד מזון עם הטחינה, הלימון, השום והתבלינים.", "מוסיפים מעט ממי הבישול עד לקבלת מרקם חלק."],
+      "image": "https://res.cloudinary.com/dxwlhbaoe/image/upload/c_limit,w_800,q_auto,f_auto/v1732431286/kbobaalznqviofyhpiyt.jpg",
+      "tags": ["פרווה", "ממרחים", "שבת"]
+    },
+    {
+      "owner": "demo-user@example.test",
+      "name": "מרק עדשים כתומות",
+      "servings": 6,
+      "type": "פרווה",
+      "time": "00:40",
+      "level": "קל",
+      "product": ["2 כוסות עדשים כתומות", "1 בצל", "2 גזרים", "1 כפית כמון", "8 כוסות מים", "מלח ופלפל"],
+      "directions": ["מטגנים בצל קצוץ עד שמזהיב.", "מוסיפים עדשים, גזר, תבלינים ומים ומבשלים 30 דקות.", "טוחנים בבלנדר מוט ומגישים חם."],
+      "image": "https://res.cloudinary.com/dxwlhbaoe/image/upload/c_limit,w_800,q_auto,f_auto/v1767622915/kpo27ggoj94v9jal8iwd.jpg",
+      "tags": ["פרווה", "מרקים", "חורף"]
+    }
+  ]
+}
