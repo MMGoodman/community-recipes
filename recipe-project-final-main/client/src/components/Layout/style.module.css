@@ -44,19 +44,17 @@
   width: 30px;
   height: 30px;
   margin-left: 1rem;
-  border-radius: 50%;
-  border: 1.5px solid #e0e0e0;
-  background: #fff;
+  padding: 0;
+  border: none;
+  background: none;
   color: #777;
-  font-size: 0.8rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .closeTags:hover {
-  border-color: #e53935;
   color: #e53935;
-  background: #fff5f5;
 }
 
 /* ===== CONTENT ===== */
