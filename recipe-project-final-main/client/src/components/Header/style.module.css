@@ -170,15 +170,6 @@ body {
   border-bottom: none;
 }
 
-.tagsPanelTitle {
-  margin: 0;
-  padding: 0.7rem 1rem 0.45rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #888;
-  text-align: right;
-}
-
 .searchTagItem {
   display: flex;
   align-items: center;

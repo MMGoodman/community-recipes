@@ -4,12 +4,11 @@ import style from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DataContext from "../context/DataContext";
-import ShowTags from "../ShowTags";
 
 // כמה זמן מחכים אחרי ההקשה האחרונה לפני ששולחים חיפוש לשרת
 const SEARCH_DELAY_MS = 300;
 
-function Header({ curentTags, setCurentTags }) {
+function Header({ setCurentTags, onSearchClick }) {
   const { curentUser, setCurentUser } = useContext(DataContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -81,7 +80,6 @@ function Header({ curentTags, setCurentTags }) {
   };
 
   const isLoggedIn = curentUser && curentUser._id;
-  const hasSearch = search.trim() !== "";
 
   return (
     <div className={style.header}>
@@ -144,22 +142,13 @@ function Header({ curentTags, setCurentTags }) {
           placeholder="🔍 חפש מתכון או קטגוריה..."
           value={search}
           onChange={handelSearch}
+          onClick={onSearchClick}
           onFocus={() => setIsSearchOpen(true)}
           onBlur={() => setIsSearchOpen(false)}
           className={style.searchInput}
         />
-        {/* בשתי הרשימות: בלי preventDefault לחיצה בתוכן הייתה מורידה את הפוקוס מהשדה וסוגרת אותן */}
-        {/* לפני שמקלידים, לחיצה על תיבת החיפוש פותחת את כל הקטגוריות לסינון.
-            הן נטענות כבר עם הדף ורק מוסתרות, כדי שהרשימה תיפתח מיד */}
-        <div
-          className={style.searchResults}
-          hidden={!isSearchOpen || hasSearch}
-          onMouseDown={(e) => e.preventDefault()}
-        >
-          <p className={style.tagsPanelTitle}>סינון לפי קטגוריה</p>
-          <ShowTags curentTags={curentTags} setCurentTags={setCurentTags} />
-        </div>
-        {isSearchOpen && hasSearch && (matchingTags.length > 0 || data.length > 0) && (
+        {isSearchOpen && (matchingTags.length > 0 || data.length > 0) && (
+          // בלי preventDefault לחיצה על הרשימה הייתה מורידה את הפוקוס מהשדה וסוגרת אותה
           <div className={style.searchResults} onMouseDown={(e) => e.preventDefault()}>
             {matchingTags.map((tag) => (
               <p
@@ -191,8 +180,8 @@ function Header({ curentTags, setCurentTags }) {
 }
 
 Header.propTypes = {
-  curentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   setCurentTags: PropTypes.func.isRequired,
+  onSearchClick: PropTypes.func.isRequired,
 };
 
 export default Header;

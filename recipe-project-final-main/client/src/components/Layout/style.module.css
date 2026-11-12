@@ -17,6 +17,48 @@
   padding: 0.65rem 1.5rem;
 }
 
+/* ===== TAGS BAR ===== */
+.tagsBar {
+  position: sticky;
+  top: 62px;
+  z-index: 998;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+}
+
+.tagsHidden {
+  display: none;
+}
+
+/* התגיות נגללות לצדדים, וכפתור הסגירה נשאר תמיד גלוי */
+.tagsScroll {
+  flex: 1;
+  min-width: 0;
+}
+
+.closeTags {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin-left: 1rem;
+  border-radius: 50%;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  color: #777;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.closeTags:hover {
+  border-color: #e53935;
+  color: #e53935;
+  background: #fff5f5;
+}
+
 /* ===== CONTENT ===== */
 .content {
   flex: 1;
@@ -32,6 +74,10 @@
     padding: 0.5rem 1rem;
   }
 
+  .tagsBar {
+    top: 56px;
+  }
+
   .content {
     padding: 1rem;
   }
@@ -40,6 +86,14 @@
 @media (max-width: 600px) {
   .stickyHeader {
     padding: 0.4rem 0.75rem;
+  }
+
+  .tagsBar {
+    top: 95px;
+  }
+
+  .closeTags {
+    margin-left: 0.5rem;
   }
 
   .content {
