@@ -1,35 +1,72 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
+import PropTypes from "prop-types";
 import style from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DataContext from "../context/DataContext";
 
-function Header() {
+// כמה זמן מחכים אחרי ההקשה האחרונה לפני ששולחים חיפוש לשרת
+const SEARCH_DELAY_MS = 300;
+
+function Header({ setCurentTags }) {
   const { curentUser, setCurentUser } = useContext(DataContext);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
+  const [matchingTags, setMatchingTags] = useState([]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const searchInput = useRef(null);
 
   useEffect(() => {
-    const bringData = async () => {
+    const term = search.trim().toLowerCase();
+    if (!term) {
+      setData([]);
+      setMatchingTags([]);
+      return;
+    }
+
+    let isLatest = true;
+    const timer = setTimeout(async () => {
       try {
-        const result = await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/recipe/search`,
-          { filter: search }
-        );
-        setData(result.data);
+        const [recipes, tags] = await Promise.all([
+          axios.post(`${import.meta.env.VITE_API_URL}/api/recipe/search`, { filter: term }),
+          axios.get(`${import.meta.env.VITE_API_URL}/api/recipe/all/tags`),
+        ]);
+        // תשובה ישנה שהגיעה אחרי שהמשתמש כבר המשיך להקליד לא תדרוס את החדשה
+        if (!isLatest) return;
+        setData(recipes.data);
+        setMatchingTags(tags.data.filter((tag) => tag.toLowerCase().includes(term)));
       } catch (error) {
         console.log(error);
       }
+    }, SEARCH_DELAY_MS);
+
+    // כל הקשה חדשה מבטלת את הטיימר הקודם, וכך נשלחת רק בקשה אחת בסוף ההקלדה
+    return () => {
+      isLatest = false;
+      clearTimeout(timer);
     };
-    if (search) bringData();
-    else setData([]);
   }, [search]);
 
   const handelSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
+  };
+
+  const finishSearch = () => {
+    setSearch("");
+    searchInput.current?.blur();
+  };
+
+  const pickRecipe = (name) => {
+    navigate(`/recipe/${name}`);
+    finishSearch();
+  };
+
+  const pickTag = (tag) => {
+    setCurentTags([tag]);
+    finishSearch();
   };
 
   const handelOffButton = () => {
@@ -100,18 +137,33 @@ function Header() {
       {/* אמצע: חיפוש */}
       <div className={style.searchSection}>
         <input
+          ref={searchInput}
           type="search"
-          placeholder="🔍 חפש מתכון..."
+          placeholder="🔍 חפש מתכון או קטגוריה..."
+          value={search}
           onChange={handelSearch}
+          onFocus={() => setIsSearchOpen(true)}
+          onBlur={() => setIsSearchOpen(false)}
           className={style.searchInput}
         />
-        {data.length > 0 && (
-          <div className={style.searchResults}>
-            {data.map((item, index) => (
+        {isSearchOpen && (matchingTags.length > 0 || data.length > 0) && (
+          // בלי preventDefault לחיצה על הרשימה הייתה מורידה את הפוקוס מהשדה וסוגרת אותה
+          <div className={style.searchResults} onMouseDown={(e) => e.preventDefault()}>
+            {matchingTags.map((tag) => (
               <p
-                key={index}
+                key={tag}
+                className={`${style.searchResultItem} ${style.searchTagItem}`}
+                onClick={() => pickTag(tag)}
+              >
+                {tag}
+                <span className={style.searchTagBadge}>קטגוריה</span>
+              </p>
+            ))}
+            {data.map((item) => (
+              <p
+                key={item._id}
                 className={style.searchResultItem}
-                onClick={() => { navigate(`/recipe/${item.name}`); setData([]); setSearch(""); }}
+                onClick={() => pickRecipe(item.name)}
               >
                 {item.name}
               </p>
@@ -125,5 +177,9 @@ function Header() {
     </div>
   );
 }
+
+Header.propTypes = {
+  setCurentTags: PropTypes.func.isRequired,
+};
 
 export default Header;

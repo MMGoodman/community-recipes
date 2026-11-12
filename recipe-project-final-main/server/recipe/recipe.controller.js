@@ -53,10 +53,12 @@ async function readAllBy(field, filter) {
     return result.rows;
 }
 
-// חיפוש מתכונים ששמם מתחיל בטקסט שהוקלד
+// חיפוש מתכונים ששמם מכיל את הטקסט שהוקלד. שמות שמתחילים בטקסט מופיעים ראשונים
 async function search(filter) {
     const result = await query(
-        `SELECT ${RECIPE_FIELDS} FROM recipes WHERE is_active = true AND starts_with(name, $1) ORDER BY name`,
+        `SELECT ${RECIPE_FIELDS} FROM recipes
+         WHERE is_active = true AND strpos(lower(name), lower($1)) > 0
+         ORDER BY starts_with(lower(name), lower($1)) DESC, name`,
         [filter]
     );
     return result.rows;

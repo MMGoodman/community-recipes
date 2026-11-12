@@ -10,7 +10,7 @@ function Layout() {
   return (
     <div className={style.main}>
       <div className={style.stickyHeader}>
-        <Header />
+        <Header setCurentTags={setCurentTags} />
       </div>
 
       <div className={style.tagsBar}>
