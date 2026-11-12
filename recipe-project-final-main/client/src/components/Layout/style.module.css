@@ -17,16 +17,6 @@
   padding: 0.65rem 1.5rem;
 }
 
-/* ===== TAGS BAR ===== */
-.tagsBar {
-  position: sticky;
-  top: 62px;
-  z-index: 998;
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
 /* ===== CONTENT ===== */
 .content {
   flex: 1;
@@ -42,10 +32,6 @@
     padding: 0.5rem 1rem;
   }
 
-  .tagsBar {
-    top: 56px;
-  }
-
   .content {
     padding: 1rem;
   }
@@ -54,10 +40,6 @@
 @media (max-width: 600px) {
   .stickyHeader {
     padding: 0.4rem 0.75rem;
-  }
-
-  .tagsBar {
-    top: 95px;
   }
 
   .content {

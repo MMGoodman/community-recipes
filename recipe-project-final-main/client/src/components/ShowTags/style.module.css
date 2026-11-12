@@ -1,26 +1,10 @@
+/* התגיות מוצגות בתוך הרשימה שנפתחת מתיבת החיפוש, ולכן הן נשברות לכמה שורות */
 .tags-container {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 0.6rem 1.5rem;
-  scrollbar-width: thin;
-  scrollbar-color: #e0e0e0 transparent;
-  -webkit-overflow-scrolling: touch;
-}
-
-.tags-container::-webkit-scrollbar {
-  height: 3px;
-}
-
-.tags-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.tags-container::-webkit-scrollbar-thumb {
-  background: #e0e0e0;
-  border-radius: 3px;
+  padding: 0 1rem 0.9rem;
 }
 
 .tag {
