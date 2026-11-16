@@ -166,18 +166,20 @@ function AdminEditRecipe() {
                   <span className={style.label}>תגים:</span>{" "}
                   {formData.tags.join(", ")}
                 </p>
-                <button
-                  onClick={handleFinalApproval}
-                  className={style.modelSubmitButton}
-                >
-                  אישור סופי
-                </button>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className={style.cancelButton}
-                >
-                  ביטול
-                </button>
+                <div className={style.modalActions}>
+                  <button
+                    onClick={handleFinalApproval}
+                    className={style.modalSubmitButton}
+                  >
+                    אישור סופי
+                  </button>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className={style.cancelButton}
+                  >
+                    ביטול
+                  </button>
+                </div>
               </div>
             </div>
           )}

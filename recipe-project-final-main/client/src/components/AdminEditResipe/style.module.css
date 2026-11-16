@@ -151,34 +151,44 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  /* עיצוב כפתור שליחה במודל */
-  .modalSubmitButton {
+  /* כפתורי האישור והביטול בתחתית המודל, באותו גודל זה ליד זה */
+  .modalActions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .modalSubmitButton,
+  .cancelButton {
+    min-width: 130px;
     padding: 10px 20px;
     font-size: 16px;
-    background: #5bc0de;
+    font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    align-self: flex-start;
-    margin-left: 10px;
+    transition: background-color 0.2s ease;
   }
-  
+
+  /* עיצוב כפתור שליחה במודל */
+  .modalSubmitButton {
+    background-color: #4caf50;
+    color: white;
+  }
+
   .modalSubmitButton:hover {
-    background-color: #31b0d5;
+    background-color: #43a047;
   }
-  
+
   /* עיצוב כפתור ביטול */
   .cancelButton {
-    margin-left: 10px;
-    background-color: red;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #eeeeee;
+    color: #333;
   }
-  
+
   .cancelButton:hover {
-    background-color: darkred;
+    background-color: #e0e0e0;
   }
   
   /* עיצוב מודל מחיקה */
