@@ -6,6 +6,7 @@ export default function UploadImage({setImageUrl}) {
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [uploadError, setUploadError] = useState("");
 
   useEffect(() => {
     if (url) {
@@ -62,18 +63,18 @@ export default function UploadImage({setImageUrl}) {
     });
   };
 
-  function uploadSingleImage(base64) {
+  async function uploadSingleImage(base64) {
     setLoading(true);
+    setUploadError("");
     try {
-      axios
-        .post(`${import.meta.env.VITE_API_URL}/api/uplaod/image`, { image: base64 })
-        .then((res) => {
-          setUrl(res.data);
-          setImageUrl(res.data);
-        })
-        .then(() => setLoading(false));
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/uplaod/image`, { image: base64 });
+      setUrl(res.data);
+      setImageUrl(res.data);
     } catch (error) {
       console.log(error);
+      setUploadError("העלאת התמונה נכשלה. אפשר לנסות שוב.");
+    } finally {
+      // גם אם ההעלאה נכשלה, מפסיקים את הטעינה כדי שאפשר יהיה לבחור תמונה שוב
       setLoading(false);
     }
   }
@@ -130,6 +131,7 @@ export default function UploadImage({setImageUrl}) {
           </>
         )}
       </div>
+      {uploadError && <p className={style.uploadError}>{uploadError}</p>}
     </div>
   );
 }

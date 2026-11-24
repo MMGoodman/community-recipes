@@ -45,9 +45,10 @@ async function readByName(name) {
 async function readAllBy(field, filter) {
     const condition = FIND_BY[field];
     if (!condition) throw new Error(`אי אפשר לחפש לפי השדה ${field}`);
-    // רק מתכונים שאושרו ע"י מנהל
+    // רק מתכונים שאושרו ע"י מנהל, חוץ מ"המתכונים שלי": שם המשתמש רואה גם מתכונים שמחכים לאישור
+    const activeOnly = field === 'owner' ? '' : 'is_active = true AND ';
     const result = await query(
-        `SELECT ${RECIPE_FIELDS} FROM recipes WHERE is_active = true AND ${condition} ORDER BY created_at`,
+        `SELECT ${RECIPE_FIELDS} FROM recipes WHERE ${activeOnly}${condition} ORDER BY created_at`,
         [filter]
     );
     return result.rows;

@@ -339,7 +339,7 @@
 
 
 // AddNewRecipe.jsx
-import  { useContext, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UploadImage from './uploadPhoto/index.jsx';
 import DataContext from '../context/DataContext.jsx';
@@ -347,8 +347,13 @@ import axios from 'axios';
 import style from './style.module.css';
 
 function AddNewRecipe() {
-    const { curentUser } = useContext(DataContext);
+    const { curentUser, isLoading } = useContext(DataContext);
     const navigate = useNavigate();
+
+    // רק משתמש מחובר יכול להוסיף מתכון, כי למתכון צריך בעלים
+    useEffect(() => {
+        if (!isLoading && !curentUser) navigate('/Login');
+    }, [curentUser, isLoading, navigate]);
 
     const [curentName, setCurentName] = useState('');
     const [curentServings, setCurentServings] = useState('');

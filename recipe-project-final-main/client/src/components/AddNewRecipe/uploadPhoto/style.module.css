@@ -96,6 +96,13 @@
   .editButton:hover {
     background-color: #f3f4f6;
   }
+
+  .uploadError {
+    margin: 0.5rem 0 0;
+    color: #c62828;
+    font-size: 0.875rem;
+    text-align: center;
+  }
   
   @keyframes spin {
     from {

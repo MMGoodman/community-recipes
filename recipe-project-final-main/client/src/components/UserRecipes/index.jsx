@@ -39,7 +39,10 @@ function UserRecipes() {
       <h3>המתכונים שלי</h3>
       <div className={style.item}>
         {recipes.map((item) => (
-          <RecipeList key={item._id} item={item} />
+          <div key={item._id} className={style.recipeWrap}>
+            {!item.isActive && <span className={style.pendingBadge}>ממתין לאישור</span>}
+            <RecipeList item={item} />
+          </div>
         ))}
       </div>
     </div>
